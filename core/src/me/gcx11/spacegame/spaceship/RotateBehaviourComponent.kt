@@ -1,6 +1,8 @@
 package me.gcx11.spacegame.spaceship
 
 import com.badlogic.gdx.Gdx
+import kotlin.math.atan2
+import kotlin.math.PI
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
 
@@ -9,22 +11,21 @@ class RotateBehaviourComponent(
 
     val rotateSpeed: Float = 5f
 ) : BehaviourComponent {
-    val threshold = Math.PI.toFloat()/90f
+    val threshold = PI/90f
 
     override fun update(delta: Float) {
         parent.getComponent<GeometricComponent>()?.let {
             val mouseX = Gdx.input.x
             val mouseY = Gdx.input.y
 
-            val mouseAngle = Math.atan2((mouseY - it.y).toDouble(),
-                                        (mouseX - it.x).toDouble())
+            val mouseAngle = atan2(mouseY - it.y, mouseX - it.x)
 
             if (it.directionAngle < mouseAngle ) {
                 val diff = mouseAngle - it.directionAngle
 
                 if (diff < threshold) {
-                    it.directionAngle = mouseAngle.toFloat()
-                } else if (diff > Math.PI.toFloat()) {
+                    it.directionAngle = mouseAngle
+                } else if (diff > PI) {
                     it.directionAngle -= rotateSpeed * delta
                 } else {
                     it.directionAngle += rotateSpeed * delta
@@ -33,19 +34,19 @@ class RotateBehaviourComponent(
                 val diff = it.directionAngle - mouseAngle
 
                 if (diff < threshold) {
-                    it.directionAngle = mouseAngle.toFloat()
-                } else if (diff > Math.PI.toFloat()) {
+                    it.directionAngle = mouseAngle
+                } else if (diff > PI) {
                     it.directionAngle += rotateSpeed * delta
                 } else {
                     it.directionAngle -= rotateSpeed * delta
                 }
             }
 
-            if (it.directionAngle < -Math.PI) {
-                it.directionAngle += 2*Math.PI.toFloat()
+            if (it.directionAngle < -PI) {
+                it.directionAngle += 2*PI.toFloat()
             }
-            else if (it.directionAngle > Math.PI) {
-                it.directionAngle -= 2*Math.PI.toFloat()
+            else if (it.directionAngle > PI) {
+                it.directionAngle -= 2*PI.toFloat()
             }
             //it.directionAngle = mouseAngle.toFloat()
         }
