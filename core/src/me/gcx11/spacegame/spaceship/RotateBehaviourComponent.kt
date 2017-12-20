@@ -11,7 +11,7 @@ class RotateBehaviourComponent(
 
     val rotateSpeed: Float = 5f
 ) : BehaviourComponent {
-    val threshold = PI/90f
+    val threshold = PI / 90f
 
     override fun update(delta: Float) {
         parent.getComponent<GeometricComponent>()?.let {
@@ -44,8 +44,7 @@ class RotateBehaviourComponent(
 
             if (it.directionAngle < -PI) {
                 it.directionAngle += 2*PI.toFloat()
-            }
-            else if (it.directionAngle > PI) {
+            } else if (it.directionAngle > PI) {
                 it.directionAngle -= 2*PI.toFloat()
             }
             //it.directionAngle = mouseAngle.toFloat()
