@@ -9,10 +9,10 @@ import me.gcx11.spacegame.core.RenderableComponent
 import me.gcx11.spacegame.core.toScreenAngle
 
 class RenderableComponent(
-        override val parent: Entity,
+    override val parent: Entity,
 
-        val shapeRenderer: ShapeRenderer = ShapeRenderer(),
-        val color: Color = Color.RED
+    val shapeRenderer: ShapeRenderer = ShapeRenderer(),
+    val color: Color = Color.RED
 ) : RenderableComponent, DisposableComponent {
 
     override fun draw() {
