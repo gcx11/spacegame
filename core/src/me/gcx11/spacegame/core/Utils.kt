@@ -9,5 +9,5 @@ fun Float.radiansToDegrees(): Float {
 }
 
 fun Float.toScreenAngle(): Float {
-    return -this.radiansToDegrees() - 90f
+    return this.radiansToDegrees() + 90f
 }
