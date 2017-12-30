@@ -3,10 +3,10 @@ package me.gcx11.spacegame
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
-
+import com.badlogic.gdx.graphics.OrthographicCamera
+import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.DisposableComponent
-import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.RenderableComponent
 
 class SpaceGame : ApplicationAdapter() {
@@ -14,6 +14,8 @@ class SpaceGame : ApplicationAdapter() {
         private var entities: MutableList<Entity> = mutableListOf()
         private var entitiesToAdd: MutableList<Entity> = mutableListOf()
         private var entitiesToDelete: MutableList<Entity> = mutableListOf()
+
+        val camera = OrthographicCamera()
 
         fun addLater(entity: Entity) {
             entitiesToAdd.add(entity)
@@ -25,6 +27,8 @@ class SpaceGame : ApplicationAdapter() {
     }
 
     override fun create() {
+        camera.setToOrtho(false, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+
         entities.add(Entity.new().also {
             it.addComponent(me.gcx11.spacegame.spaceship.GeometricComponent(
                     it, 300f, 200f, 20f, 5f, 15f))
@@ -42,14 +46,18 @@ class SpaceGame : ApplicationAdapter() {
         }
 
         entities.removeAll(entitiesToDelete)
-        entitiesToDelete.flatMap { it.getAllComponents<DisposableComponent>() }
-                .forEach { it.dispose() }
+        entitiesToDelete.flatMap { it.getAllComponents<DisposableComponent>() }.forEach { it.dispose() }
         entitiesToDelete.clear()
         entities.addAll(entitiesToAdd)
         entitiesToAdd.clear()
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+        entities.mapNotNull { it.getComponent<me.gcx11.spacegame.spaceship.GeometricComponent>() }.firstOrNull()?.let {
+            camera.position.set(it.x, it.y, 0f)
+            camera.update()
+        }
+
         for (ent in entities) {
             ent.getAllComponents<RenderableComponent>().forEach { it.draw() }
         }
