@@ -27,7 +27,8 @@ class FireBehaviourComponent(
             val ent = Entity.new().also {
                 it.addComponent(me.gcx11.spacegame.bullet.GeometricComponent(
                         it, p.noseX, p.noseY, p.directionAngle))
-                it.addComponent(me.gcx11.spacegame.bullet.MoveBehaviourComponent(it))
+                it.addComponent(me.gcx11.spacegame.bullet.MoveBehaviourComponent(
+                        it))
                 it.addComponent(me.gcx11.spacegame.bullet.RenderableComponent(it))
             }
             SpaceGame.addLater(ent)
