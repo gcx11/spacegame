@@ -16,9 +16,9 @@ class RotateBehaviourComponent(
     override fun update(delta: Float) {
         parent.getComponent<GeometricComponent>()?.let {
             val mouseX = Gdx.input.x
-            val mouseY = Gdx.input.y
+            val mouseY = Gdx.graphics.height - 1f - Gdx.input.y
 
-            val mouseAngle = atan2(mouseY - it.y, mouseX - it.x)
+            val mouseAngle = atan2(mouseY - Gdx.graphics.height / 2f, mouseX - Gdx.graphics.width / 2f)
 
             if (it.directionAngle < mouseAngle ) {
                 val diff = mouseAngle - it.directionAngle
@@ -47,7 +47,6 @@ class RotateBehaviourComponent(
             } else if (it.directionAngle > PI) {
                 it.directionAngle -= 2*PI.toFloat()
             }
-            //it.directionAngle = mouseAngle.toFloat()
         }
     }
 }
