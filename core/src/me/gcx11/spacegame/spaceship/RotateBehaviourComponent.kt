@@ -1,7 +1,5 @@
 package me.gcx11.spacegame.spaceship
 
-import com.badlogic.gdx.Gdx
-import kotlin.math.atan2
 import kotlin.math.PI
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
@@ -14,11 +12,8 @@ class RotateBehaviourComponent(
     val threshold = PI / 90f
 
     override fun update(delta: Float) {
-        parent.getComponent<GeometricComponent>()?.let {
-            val mouseX = Gdx.input.x
-            val mouseY = Gdx.graphics.height - 1f - Gdx.input.y
-
-            val mouseAngle = atan2(mouseY - Gdx.graphics.height / 2f, mouseX - Gdx.graphics.width / 2f)
+        parent.getOptionalComponent<GeometricComponent>()?.let {
+            val mouseAngle = parent.getRequiredComponent<LogicComponent>().computeDirection()
 
             if (it.directionAngle < mouseAngle ) {
                 val diff = mouseAngle - it.directionAngle

@@ -17,7 +17,7 @@ class MoveBehaviourComponent(
         timer -= delta
         if (timer < 0) SpaceGame.deleteLater(parent)
 
-        parent.getComponent<GeometricComponent>()?.let {
+        parent.getOptionalComponent<GeometricComponent>()?.let {
             it.x += speed * cos(it.directionAngle)
             it.y += speed * sin(it.directionAngle)
         }

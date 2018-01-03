@@ -11,7 +11,7 @@ class MoveBehaviourComponent(
     val speed: Float = 5f
 ) : BehaviourComponent {
     override fun update(delta: Float) {
-        parent.getComponent<GeometricComponent>()?.let {
+        parent.getOptionalComponent<GeometricComponent>()?.let {
             it.x += speed * cos(it.directionAngle)
             it.y += speed * sin(it.directionAngle)
         }

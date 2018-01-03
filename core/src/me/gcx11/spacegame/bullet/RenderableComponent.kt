@@ -15,7 +15,7 @@ class RenderableComponent(
     val color: Color = Color.FIREBRICK
 ) : RenderableComponent, DisposableComponent {
     override fun draw() {
-        parent.getComponent<GeometricComponent>()?.let {
+        parent.getOptionalComponent<GeometricComponent>()?.let {
             shapeRenderer.projectionMatrix = SpaceGame.camera.combined
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line)
             shapeRenderer.color = color

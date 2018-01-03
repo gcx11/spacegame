@@ -1,7 +1,5 @@
 package me.gcx11.spacegame.spaceship
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
 import me.gcx11.spacegame.SpaceGame
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
@@ -14,16 +12,16 @@ class FireBehaviourComponent(
     var fireTimer = 0f
 
     override fun update(delta: Float) {
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && fireTimer <= 0f) {
+        if (parent.getRequiredComponent<LogicComponent>().canFire() && fireTimer <= 0f) {
             launchMissle()
+            fireTimer = fireDelay
         }
 
-        if (fireTimer <= 0f) fireTimer = fireDelay
         fireTimer -= delta
     }
 
     fun launchMissle() {
-        parent.getComponent<GeometricComponent>()?.let { p ->
+        parent.getOptionalComponent<GeometricComponent>()?.let { p ->
             val ent = Entity.new().also {
                 it.addComponent(me.gcx11.spacegame.bullet.GeometricComponent(
                         it, p.noseX, p.noseY, p.directionAngle))

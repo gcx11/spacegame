@@ -1,5 +1,4 @@
 ## How to run
 ```gradle
-./gradlew clean
-./gradlew desktop:run
+./gradlew clean desktop:run
 ```

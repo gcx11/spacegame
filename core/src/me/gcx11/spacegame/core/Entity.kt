@@ -8,7 +8,15 @@ class Entity(
         components.add(component)
     }
 
-    inline fun <reified T : Component> getComponent(): T? {
+    inline fun <reified T : Component> hasComponent(): Boolean {
+        return components.any { it is T }
+    }
+
+    inline fun <reified T : Component> getRequiredComponent(): T {
+        return components.first { it is T } as T
+    }
+
+    inline fun <reified T : Component> getOptionalComponent(): T? {
         return components.firstOrNull { it is T } as T?
     }
 
