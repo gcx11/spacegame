@@ -1,6 +1,7 @@
 package me.gcx11.spacegame.spaceship
 
 import me.gcx11.spacegame.SpaceGame
+import me.gcx11.spacegame.bullet.BulletSpawner
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
 
@@ -21,17 +22,6 @@ class FireBehaviourComponent(
     }
 
     fun launchMissle() {
-        parent.getOptionalComponent<GeometricComponent>()?.let { p ->
-                val ent = Entity.new().also {
-                    it.addComponent(
-                        me.gcx11.spacegame.bullet.GeometricComponent(
-                            it, p.noseX, p.noseY, p.directionAngle
-                        )
-                    )
-                    it.addComponent(me.gcx11.spacegame.bullet.MoveBehaviourComponent(it))
-                    it.addComponent(me.gcx11.spacegame.bullet.RenderableComponent(it))
-                }
-                SpaceGame.addLater(ent)
-            }
+        SpaceGame.addLater(BulletSpawner.createBullet(parent))
     }
 }
