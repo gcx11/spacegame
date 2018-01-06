@@ -1,8 +1,10 @@
 package me.gcx11.spacegame.spaceship
 
-import kotlin.math.PI
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.sign
 
 class RotateBehaviourComponent(
     override val parent: Entity,
@@ -13,35 +15,20 @@ class RotateBehaviourComponent(
 
     override fun update(delta: Float) {
         parent.getOptionalComponent<GeometricComponent>()?.let {
-            val mouseAngle = parent.getRequiredComponent<LogicComponent>().computeDirection()
-
-            if (it.directionAngle < mouseAngle ) {
+                val mouseAngle = parent.getRequiredComponent<LogicComponent>().computeDirection()
                 val diff = mouseAngle - it.directionAngle
 
-                if (diff < threshold) {
-                    it.directionAngle = mouseAngle
-                } else if (diff > PI) {
-                    it.directionAngle -= rotateSpeed * delta
-                } else {
-                    it.directionAngle += rotateSpeed * delta
+                when {
+                    abs(diff) < threshold -> it.directionAngle = mouseAngle
+                    abs(diff) > PI -> it.directionAngle -= rotateSpeed * delta * diff.sign
+                    else -> it.directionAngle += rotateSpeed * delta * diff.sign
                 }
-            } else if (it.directionAngle > mouseAngle) {
-                val diff = it.directionAngle - mouseAngle
 
-                if (diff < threshold) {
-                    it.directionAngle = mouseAngle
-                } else if (diff > PI) {
-                    it.directionAngle += rotateSpeed * delta
-                } else {
-                    it.directionAngle -= rotateSpeed * delta
+                if (it.directionAngle < -PI) {
+                    it.directionAngle += 2 * PI.toFloat()
+                } else if (it.directionAngle > PI) {
+                    it.directionAngle -= 2 * PI.toFloat()
                 }
             }
-
-            if (it.directionAngle < -PI) {
-                it.directionAngle += 2*PI.toFloat()
-            } else if (it.directionAngle > PI) {
-                it.directionAngle -= 2*PI.toFloat()
-            }
-        }
     }
 }

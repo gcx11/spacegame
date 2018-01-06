@@ -16,18 +16,18 @@ class RenderableComponent(
 ) : RenderableComponent, DisposableComponent {
     override fun draw() {
         parent.getOptionalComponent<GeometricComponent>()?.let {
-            shapeRenderer.projectionMatrix = SpaceGame.camera.combined
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line)
-            shapeRenderer.color = color
+                shapeRenderer.projectionMatrix = SpaceGame.camera.combined
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Line)
+                shapeRenderer.color = color
 
-            shapeRenderer.identity()
-            shapeRenderer.translate(it.x, it.y, 0f)
-            shapeRenderer.rotate(0f, 0f, 1f, it.directionAngle.toScreenAngle())
-            shapeRenderer.translate(-it.x, -it.y, 0f)
+                shapeRenderer.identity()
+                shapeRenderer.translate(it.x, it.y, 0f)
+                shapeRenderer.rotate(0f, 0f, 1f, it.directionAngle.toScreenAngle())
+                shapeRenderer.translate(-it.x, -it.y, 0f)
 
-            shapeRenderer.rectLine(it.x, it.y, it.x, it.y + it.size, 1f)
-            shapeRenderer.end()
-        }
+                shapeRenderer.rectLine(it.x, it.y, it.x, it.y + it.size, 1f)
+                shapeRenderer.end()
+            }
     }
 
     override fun dispose() {

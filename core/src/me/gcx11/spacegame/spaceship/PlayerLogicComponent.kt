@@ -2,6 +2,8 @@ package me.gcx11.spacegame.spaceship
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.math.Vector3
+import me.gcx11.spacegame.SpaceGame
 import me.gcx11.spacegame.core.Entity
 import kotlin.math.atan2
 
@@ -13,10 +15,12 @@ class PlayerLogicComponent(
     }
 
     override fun computeDirection(): Float {
-        val mouseX = Gdx.input.x
-        val mouseY = Gdx.graphics.height - 1f - Gdx.input.y
+        val vec = SpaceGame.camera.unproject(
+            Vector3(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
+        )
+        val geo = parent.getRequiredComponent<GeometricComponent>()
 
-        return atan2(mouseY - Gdx.graphics.height / 2f, mouseX - Gdx.graphics.width / 2f)
+        return atan2(vec.y - geo.y, vec.x - geo.x)
     }
 
     override fun canFire(): Boolean {

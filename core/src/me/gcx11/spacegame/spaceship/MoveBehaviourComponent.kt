@@ -1,9 +1,9 @@
 package me.gcx11.spacegame.spaceship
 
-import kotlin.math.cos
-import kotlin.math.sin
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
+import kotlin.math.cos
+import kotlin.math.sin
 
 class MoveBehaviourComponent(
     override val parent: Entity,
@@ -12,8 +12,8 @@ class MoveBehaviourComponent(
 ) : BehaviourComponent {
     override fun update(delta: Float) {
         parent.getOptionalComponent<GeometricComponent>()?.let {
-            it.x += speed * cos(it.directionAngle)
-            it.y += speed * sin(it.directionAngle)
-        }
+                it.x += speed * cos(it.directionAngle)
+                it.y += speed * sin(it.directionAngle)
+            }
     }
 }

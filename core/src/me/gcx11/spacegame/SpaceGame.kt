@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import me.gcx11.spacegame.core.*
+import me.gcx11.spacegame.core.BehaviourComponent
+import me.gcx11.spacegame.core.DisposableComponent
+import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.RenderableComponent
 import me.gcx11.spacegame.spaceship.GeometricComponent
 import me.gcx11.spacegame.spaceship.PlayerLogicComponent
 
@@ -32,8 +35,11 @@ class SpaceGame : ApplicationAdapter() {
         camera.setToOrtho(false, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
 
         entities.add(Entity.new().also {
-            it.addComponent(me.gcx11.spacegame.spaceship.GeometricComponent(
-                    it, 0f, 0f, 20f, 5f, 15f))
+            it.addComponent(
+                me.gcx11.spacegame.spaceship.GeometricComponent(
+                    it, 0f, 0f, 20f, 5f, 15f
+                )
+            )
             it.addComponent(me.gcx11.spacegame.spaceship.RenderableComponent(it))
             it.addComponent(me.gcx11.spacegame.spaceship.FireBehaviourComponent(it))
             it.addComponent(me.gcx11.spacegame.spaceship.RotateBehaviourComponent(it))
@@ -42,10 +48,16 @@ class SpaceGame : ApplicationAdapter() {
         })
 
         entities.add(Entity.new().also {
-            it.addComponent(me.gcx11.spacegame.spaceship.GeometricComponent(
-                it, 0f, 0f, 20f, 5f, 15f))
-            it.addComponent(me.gcx11.spacegame.spaceship.RenderableComponent(
-                it, ShapeRenderer(), Color.ORANGE))
+            it.addComponent(
+                me.gcx11.spacegame.spaceship.GeometricComponent(
+                    it, 0f, 0f, 20f, 5f, 15f
+                )
+            )
+            it.addComponent(
+                me.gcx11.spacegame.spaceship.RenderableComponent(
+                    it, ShapeRenderer(), Color.ORANGE
+                )
+            )
             it.addComponent(me.gcx11.spacegame.spaceship.FireBehaviourComponent(it))
             it.addComponent(me.gcx11.spacegame.spaceship.RotateBehaviourComponent(it, 3f))
             it.addComponent(me.gcx11.spacegame.spaceship.MoveBehaviourComponent(it, 4f))
@@ -71,7 +83,7 @@ class SpaceGame : ApplicationAdapter() {
             ?.getOptionalComponent<GeometricComponent>()?.let {
                 camera.position.set(it.x, it.y, 0f)
                 camera.update()
-        }
+            }
 
         for (ent in entities) {
             ent.getAllComponents<RenderableComponent>().forEach { it.draw() }
