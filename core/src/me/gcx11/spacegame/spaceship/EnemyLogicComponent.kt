@@ -26,6 +26,14 @@ class EnemyLogicComponent(
     }
 
     override fun canFire(): Boolean {
+        return isBehindEnemy()
+    }
+
+    override fun canSpeedUp(): Boolean {
+        return isBehindEnemy()
+    }
+
+    private fun isBehindEnemy(): Boolean {
         val selfGeo = parent.getRequiredComponent<GeometricComponent>()
         val targetGeo = target?.getRequiredComponent<GeometricComponent>()
 

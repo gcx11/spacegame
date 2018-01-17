@@ -14,6 +14,8 @@ object SpaceshipSpawner {
             )
             it.addComponent(me.gcx11.spacegame.spaceship.RenderableComponent(it, color = color))
             it.addComponent(me.gcx11.spacegame.spaceship.FireBehaviourComponent(it))
+            it.addComponent(me.gcx11.spacegame.spaceship.CollidableComponent(it))
+            it.addComponent(me.gcx11.spacegame.spaceship.BoosterComponent(it))
         }
     }
 

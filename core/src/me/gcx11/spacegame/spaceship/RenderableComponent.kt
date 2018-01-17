@@ -19,6 +19,7 @@ class RenderableComponent(
         parent.getOptionalComponent<GeometricComponent>()?.let {
                 shapeRenderer.projectionMatrix = SpaceGame.camera.combined
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line)
+
                 shapeRenderer.color = color
 
                 shapeRenderer.identity()
@@ -33,6 +34,7 @@ class RenderableComponent(
                         it.x + it.wingSize, it.y + it.noseSize + it.backSize
                     ).toFloatArray()
                 )
+
                 shapeRenderer.end()
             }
     }

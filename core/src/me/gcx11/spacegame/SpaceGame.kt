@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import me.gcx11.spacegame.core.BehaviourComponent
+import me.gcx11.spacegame.core.CollidableComponent
 import me.gcx11.spacegame.core.DisposableComponent
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.RenderableComponent
@@ -41,6 +42,19 @@ class SpaceGame : ApplicationAdapter() {
         for (ent in entities) {
             val delta = Gdx.graphics.deltaTime
             ent.getAllComponents<BehaviourComponent>().forEach { it.update(delta) }
+        }
+
+        val collidables = entities.mapNotNull { it.getOptionalComponent<CollidableComponent>() }
+            .onEach { it.clearAllCollided() }
+
+        for (i in 0 until collidables.size) {
+            for (j in i + 1 until collidables.size) {
+                if (collidables[i].collidesWith(collidables[j]) ||
+                    collidables[j].collidesWith(collidables[i])) {
+                    collidables[i].addCollided(collidables[j])
+                    collidables[j].addCollided(collidables[i])
+                }
+            }
         }
 
         entities.removeAll(entitiesToDelete)

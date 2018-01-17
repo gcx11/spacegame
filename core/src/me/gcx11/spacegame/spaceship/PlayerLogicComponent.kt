@@ -12,6 +12,10 @@ class PlayerLogicComponent(
 ) : LogicComponent(parent) {
 
     override fun update(delta: Float) {
+        if (parent.getRequiredComponent<CollidableComponent>()
+                .allCollided().isNotEmpty()) {
+            println("Collided")
+        }
     }
 
     override fun computeDirection(): Float {
@@ -25,5 +29,9 @@ class PlayerLogicComponent(
 
     override fun canFire(): Boolean {
         return Gdx.input.isButtonPressed(Input.Buttons.LEFT)
+    }
+
+    override fun canSpeedUp(): Boolean {
+        return Gdx.input.isButtonPressed(Input.Buttons.RIGHT)
     }
 }

@@ -19,4 +19,10 @@ class GeometricComponent(
 ) : GeometricComponent {
     val noseX get() = x + noseSize * cos(directionAngle)
     val noseY get() = y + noseSize * sin(directionAngle)
+
+    val leftWingX = x + backSize * cos(directionAngle) - wingSize * sin(directionAngle)
+    val leftWingY = y + wingSize * cos(directionAngle) + backSize * sin(directionAngle)
+
+    val rightWingX = x + wingSize * cos(directionAngle) + backSize * sin(directionAngle)
+    val rightWingY = y - backSize * cos(directionAngle) + wingSize * sin(directionAngle)
 }
