@@ -13,7 +13,12 @@ data class Point(
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
             is Point -> position.epsilonEquals(shape.position)
-            is Line -> position.cpy().sub(shape.first).isCollinear(shape.second.cpy().sub(position))
+            is Line -> {
+                val vectorAC = position.cpy().sub(shape.first)
+                val vectorCB = shape.second.cpy().sub(position)
+                val vectorAB = shape.second.cpy().sub(shape.first)
+                return vectorAB.len() == vectorAC.len() + vectorCB.len()
+            }
             is Triangle -> position.isPointInsideTriangle(shape.first, shape.second, shape.third)
         }
     }
