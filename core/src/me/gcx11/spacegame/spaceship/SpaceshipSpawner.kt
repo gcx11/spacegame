@@ -34,7 +34,7 @@ object SpaceshipSpawner {
         val enemySpaceship = createPrototype(x, y, Color.ORANGE)
         enemySpaceship.let {
             it.addComponent(me.gcx11.spacegame.spaceship.RotateBehaviourComponent(it, 3f))
-            it.addComponent(me.gcx11.spacegame.spaceship.MoveBehaviourComponent(it, 4f))
+            it.addComponent(me.gcx11.spacegame.spaceship.MoveBehaviourComponent(it, 0f))
             it.addComponent(me.gcx11.spacegame.spaceship.EnemyLogicComponent(it))
         }
 

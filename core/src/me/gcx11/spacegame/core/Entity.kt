@@ -24,6 +24,10 @@ class Entity(
         return components.mapNotNull { it as? T }
     }
 
+    inline fun <reified T : Component> removeAllComponents() {
+        components.removeAll { it is T }
+    }
+
     companion object {
         var currentId = 0
 

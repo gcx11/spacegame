@@ -12,10 +12,9 @@ class PlayerLogicComponent(
 ) : LogicComponent(parent) {
 
     override fun update(delta: Float) {
-        if (parent.getRequiredComponent<CollidableComponent>()
-                .allCollided().isNotEmpty()) {
-            println("Collided")
-        }
+        parent.getRequiredComponent<CollidableComponent>().allCollided().forEach {
+                println("Collided ${parent.id} with ${it.parent.id}")
+            }
     }
 
     override fun computeDirection(): Float {

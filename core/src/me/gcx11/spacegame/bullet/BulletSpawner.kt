@@ -25,6 +25,7 @@ object BulletSpawner {
                 )
             )
             it.addComponent(me.gcx11.spacegame.bullet.RenderableComponent(it, color = shooterColor))
+            it.addComponent(me.gcx11.spacegame.bullet.CollidableComponent(it))
         }
     }
 }
