@@ -20,6 +20,7 @@ class RenderableComponent(
             ?.let {
                 shapeRenderer.use(color) {
                     identity()
+
                     translate(it.x, it.y, 0f)
                     rotate(0f, 0f, 1f, it.directionAngle.toScreenAngle())
                     translate(-it.x, -it.y, 0f)
