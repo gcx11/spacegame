@@ -109,6 +109,8 @@ gradle-app.setting
 /ios/build/
 /ios-moe/build/
 
+core/out/
+
 ## OS Specific
 .DS_Store
 Thumbs.db
