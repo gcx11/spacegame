@@ -15,9 +15,9 @@ import me.gcx11.spacegame.spaceship.SpaceshipSpawner
 
 class SpaceGame : ApplicationAdapter() {
     companion object {
-        private var entities: MutableList<Entity> = mutableListOf()
-        private var entitiesToAdd: MutableList<Entity> = mutableListOf()
-        private var entitiesToDelete: MutableList<Entity> = mutableListOf()
+        private val entities: MutableList<Entity> = mutableListOf()
+        private val entitiesToAdd: MutableList<Entity> = mutableListOf()
+        private val entitiesToDelete: MutableList<Entity> = mutableListOf()
 
         val entitiesReadOnly: List<Entity> = entities
         val camera = OrthographicCamera()

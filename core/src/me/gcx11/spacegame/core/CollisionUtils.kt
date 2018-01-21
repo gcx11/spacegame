@@ -17,11 +17,14 @@ data class Point(
                 val vectorAC = position.cpy().sub(shape.first)
                 val vectorCB = shape.second.cpy().sub(position)
                 val vectorAB = shape.second.cpy().sub(shape.first)
-                return vectorAB.len() == vectorAC.len() + vectorCB.len()
+
+                vectorAB.len() == vectorAC.len() + vectorCB.len()
             }
             is Triangle -> position.isPointInsideTriangle(shape.first, shape.second, shape.third)
         }
     }
+
+    override fun toString() = "Point (${position.x}, ${position.y})"
 }
 
 data class Line(
@@ -31,12 +34,21 @@ data class Line(
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
             is Point -> shape.intersectsWith(this)
-            is Line -> Intersector.intersectLines(
-                first, second, shape.first, shape.second, null
-            )
-            is Triangle -> return shape.edges.any { it.intersectsWith(this) }
+            is Line -> {
+                if (shape.intersectsWith(Point(first)) || Point(first).intersectsWith(shape)) return true
+                else if (shape.intersectsWith(Point(second)) || Point(second).intersectsWith(shape)) return true
+
+                Intersector.intersectSegments(
+                    first, second, shape.first, shape.second, null
+                )
+            }
+            is Triangle -> {
+                shape.edges.any { it.intersectsWith(this) }
+            }
         }
     }
+
+    override fun toString() = "Line [(${first.x}, ${first.y}), (${second.x}, ${second.y})]"
 }
 
 data class Triangle(
@@ -57,17 +69,16 @@ data class Triangle(
     val vertices get() = setOf(first, second, third)
 
     val edges get() = setOf(Line(first, second), Line(second, third), Line(third, first))
+
+    override fun toString(): String {
+        return "Triangle [(${first.x}, ${first.y}), (${second.x}, ${second.y}), (${third.x}, ${third.y})]"
+    }
 }
 
 fun Vector2.isPointInsideTriangle(v1: Vector2, v2: Vector2, v3: Vector2): Boolean {
-    // https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
-    val t = this.x - v1.x
-    val u = this.y - v1.y
-    val v = ((v2.x - v1.x) * u - (v2.y - v1.y) * t) > 0
+    // check edges first
+    val triangle = Triangle(v1, v2, v3)
+    if (triangle.edges.any { it.intersectsWith(Point(Vector2(x, y))) }) return true
 
-    if (((v3.x - v1.x) * u - (v3.y - v1.y) * t > 0) == v) {
-        return false
-    } else {
-        return ((v3.x - v2.x) * (this.y - v2.y) - (v3.y - v2.y) * (this.x - v2.x) > 0) == v
-    }
+    return Intersector.isPointInTriangle(this, v1, v2, v3)
 }

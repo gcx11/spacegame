@@ -5,39 +5,34 @@ import me.gcx11.spacegame.core.Entity
 
 object SpaceshipSpawner {
 
-    private fun createPrototype(x: Float, y: Float, color: Color): Entity {
+    fun createMinimalPrototype(x: Float, y: Float): Entity {
         return Entity.new().also {
-            it.addComponent(
-                me.gcx11.spacegame.spaceship.GeometricComponent(
-                    it, x, y, 20f, 5f, 15f
-                )
-            )
-            it.addComponent(me.gcx11.spacegame.spaceship.RenderableComponent(it, color = color))
-            it.addComponent(me.gcx11.spacegame.spaceship.FireBehaviourComponent(it))
-            it.addComponent(me.gcx11.spacegame.spaceship.CollidableComponent(it))
-            it.addComponent(me.gcx11.spacegame.spaceship.BoosterComponent(it))
+            it.addComponent(GeometricComponent(it, x, y, 20f, 5f, 15f))
+            it.addComponent(CollidableComponent(it))
+        }
+    }
+
+    fun createPrototype(x: Float, y: Float, color: Color): Entity {
+        return createMinimalPrototype(x, y).also {
+            it.addComponent(RenderableComponent(it, color = color))
+            it.addComponent(FireBehaviourComponent(it))
+            it.addComponent(BoosterComponent(it))
         }
     }
 
     fun createPlayer(x: Float, y: Float): Entity {
-        val playerSpaceship = createPrototype(x, y, Color.RED)
-        playerSpaceship.let {
-            it.addComponent(me.gcx11.spacegame.spaceship.RotateBehaviourComponent(it))
-            it.addComponent(me.gcx11.spacegame.spaceship.MoveBehaviourComponent(it))
-            it.addComponent(me.gcx11.spacegame.spaceship.PlayerLogicComponent(it))
+        return createPrototype(x, y, Color.RED).also {
+            it.addComponent(RotateBehaviourComponent(it))
+            it.addComponent(MoveBehaviourComponent(it))
+            it.addComponent(PlayerLogicComponent(it))
         }
-
-        return playerSpaceship
     }
 
     fun createEnemy(x: Float, y: Float): Entity {
-        val enemySpaceship = createPrototype(x, y, Color.ORANGE)
-        enemySpaceship.let {
-            it.addComponent(me.gcx11.spacegame.spaceship.RotateBehaviourComponent(it, 3f))
-            it.addComponent(me.gcx11.spacegame.spaceship.MoveBehaviourComponent(it, 0f))
-            it.addComponent(me.gcx11.spacegame.spaceship.EnemyLogicComponent(it))
+        return createPrototype(x, y, Color.ORANGE).also {
+            it.addComponent(RotateBehaviourComponent(it, 3f))
+            it.addComponent(MoveBehaviourComponent(it, 0f))
+            it.addComponent(EnemyLogicComponent(it))
         }
-
-        return enemySpaceship
     }
 }
