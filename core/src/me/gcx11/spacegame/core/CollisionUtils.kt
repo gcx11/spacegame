@@ -60,8 +60,12 @@ data class Triangle(
         return when (shape) {
             is Point -> shape.intersectsWith(this)
             is Line -> shape.intersectsWith(this)
-            is Triangle -> shape.vertices.any {
-                it.isPointInsideTriangle(first, second, third)
+            is Triangle -> {
+                shape.vertices.any {
+                    it.isPointInsideTriangle(first, second, third)
+                } || vertices.any {
+                    it.isPointInsideTriangle(shape.first, shape.second, shape.third)
+                }
             }
         }
     }
