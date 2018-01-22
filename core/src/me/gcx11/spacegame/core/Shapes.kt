@@ -47,7 +47,6 @@ data class Line(
                 shape.edges.any { it.intersectsWith(this) }
             }
             is Complex -> shape.intersectsWith(this)
-
         }
     }
 
@@ -71,7 +70,6 @@ data class Triangle(
                 }
             }
             is Complex -> shape.intersectsWith(this)
-
         }
     }
 

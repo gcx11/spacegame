@@ -28,8 +28,8 @@ class GeometricComponent(
             )
         }
 
-    override fun toString(): String =
-        buildString {
+    override fun toString(): String {
+        return buildString {
             append("Bullet GC with:")
             append("\n")
             append("x: $x, ")
@@ -38,5 +38,5 @@ class GeometricComponent(
             append("endY: $endY, ")
             append("directionAngle: $directionAngle")
         }
-
+    }
 }
