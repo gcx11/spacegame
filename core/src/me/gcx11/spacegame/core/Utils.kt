@@ -11,3 +11,17 @@ fun Float.radiansToDegrees(): Float {
 fun Float.toScreenAngle(): Float {
     return this.radiansToDegrees() + 90f
 }
+
+/**
+ * Utility function for the same style of toString method.
+ */
+inline fun generateToString(title: String, values: Map<String, Any>): String {
+    return buildString {
+        append(title)
+        values.forEach {
+            val (key, value) = it
+            append("\n\t")
+            append("$key: ${value}")
+        }
+    }
+}
