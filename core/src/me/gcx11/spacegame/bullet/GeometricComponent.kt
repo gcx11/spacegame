@@ -13,7 +13,7 @@ class GeometricComponent(
 
         var x: Float,
         var y: Float,
-        var directionAngle: Float = 0f,
+        val directionAngle: Float = 0f,
 
         val size: Float = 5f
 ) : GeometricComponent {
@@ -27,4 +27,16 @@ class GeometricComponent(
                     Vector2(endX, endY)
             )
         }
+
+    override fun toString(): String =
+            buildString {
+                append("Bullet GC with:")
+                append("\n\t")
+                append("x: ${x}, ")
+                append("y: ${x}, ")
+                append("endX: ${endX}, ")
+                append("endY: ${endY}, ")
+                append("directionAngle: ${directionAngle}")
+            }
+
 }
