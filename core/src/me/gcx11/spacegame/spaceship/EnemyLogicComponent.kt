@@ -12,6 +12,9 @@ class EnemyLogicComponent(
 
     override fun update(delta: Float) {
         target = SpaceGame.entitiesReadOnly.firstOrNull { it.hasComponent<PlayerLogicComponent>() }
+        parent.getRequiredComponent<CollidableComponent>().allCollided().forEach {
+                println("Collided ${parent.id} with ${it.parent.id}")
+            }
     }
 
     override fun computeDirection(): Float {

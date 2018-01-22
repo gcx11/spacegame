@@ -20,6 +20,10 @@ class RenderableComponent(
                 shapeRenderer.use(color) {
                     identity()
 
+                    color = Color.WHITE
+                    rectLine(it.x, it.y, it.endX, it.endY, 1f)
+                    color = this@RenderableComponent.color
+
                     translate(it.x, it.y, 0f)
                     rotate(0f, 0f, 1f, it.directionAngle.toScreenAngle())
                     translate(-it.x, -it.y, 0f)

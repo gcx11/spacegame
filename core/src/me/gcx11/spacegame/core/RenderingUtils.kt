@@ -11,7 +11,7 @@ inline fun ShapeRenderer.use(
     shapeType: ShapeRenderer.ShapeType = ShapeRenderer.ShapeType.Line,
     block: ShapeRenderer.() -> Unit
 ) {
-    this.projectionMatrix = projectionMatrix
+    this.projectionMatrix = projectionMatrix.cpy()
     this.begin(shapeType)
     this.color = color
     block(this)

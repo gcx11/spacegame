@@ -7,7 +7,7 @@ object SpaceshipSpawner {
 
     fun createMinimalPrototype(x: Float, y: Float): Entity {
         return Entity.new().also {
-            it.addComponent(GeometricComponent(it, x, y, 20f, 5f, 15f))
+            it.addComponent(GeometricComponent(it, x, y, 20f, 20f, 15f))
             it.addComponent(CollidableComponent(it))
         }
     }
