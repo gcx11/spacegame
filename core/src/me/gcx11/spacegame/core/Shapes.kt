@@ -21,6 +21,7 @@ data class Point(
                 vectorAB.len() == vectorAC.len() + vectorCB.len()
             }
             is Triangle -> position.isPointInsideTriangle(shape.first, shape.second, shape.third)
+            is Complex -> shape.intersectsWith(this)
         }
     }
 
@@ -45,6 +46,7 @@ data class Line(
             is Triangle -> {
                 shape.edges.any { it.intersectsWith(this) }
             }
+            is Complex -> shape.intersectsWith(this)
         }
     }
 
@@ -67,6 +69,7 @@ data class Triangle(
                     it.intersectsWith(this)
                 }
             }
+            is Complex -> shape.intersectsWith(this)
         }
     }
 
@@ -78,6 +81,20 @@ data class Triangle(
         return "Triangle [(${first.x}, ${first.y}), (${second.x}, ${second.y}), (${third.x}, ${third.y})]"
     }
 }
+
+data class Complex(
+    val subShapes: Set<Shape>
+) : Shape() {
+    override fun intersectsWith(shape: Shape): Boolean {
+        return when (shape) {
+            is Point -> subShapes.any { shape.intersectsWith(it) }
+            is Line -> subShapes.any { shape.intersectsWith(it) }
+            is Triangle -> subShapes.any { shape.intersectsWith(it) }
+            is Complex -> subShapes.any { shape.intersectsWith(it) }
+        }
+    }
+}
+
 
 fun Vector2.isPointInsideTriangle(v1: Vector2, v2: Vector2, v3: Vector2): Boolean {
     // check edges first

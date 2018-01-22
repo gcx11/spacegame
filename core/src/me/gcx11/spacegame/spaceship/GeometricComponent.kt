@@ -1,7 +1,11 @@
 package me.gcx11.spacegame.spaceship
 
+import com.badlogic.gdx.math.Vector2
+import me.gcx11.spacegame.core.Complex
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.GeometricComponent
+import me.gcx11.spacegame.core.Shape
+import me.gcx11.spacegame.core.Triangle
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -25,4 +29,20 @@ class GeometricComponent(
 
     val rightWingX get() = x - backSize * cos(directionAngle) + wingSize * sin(directionAngle)
     val rightWingY get() = y - wingSize * cos(directionAngle) - backSize * sin(directionAngle)
+
+    override val shape: Shape
+        get() {
+            val leftTriangle = Triangle(
+                Vector2(noseX, noseY),
+                Vector2(leftWingX, leftWingY),
+                Vector2(x, y)
+            )
+
+            val rightTriangle = Triangle(
+                Vector2(noseX, noseY),
+                Vector2(rightWingX, rightWingY),
+                Vector2(x, y)
+            )
+            return Complex(setOf(leftTriangle, rightTriangle))
+        }
 }

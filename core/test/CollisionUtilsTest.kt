@@ -1,4 +1,6 @@
+
 import com.badlogic.gdx.math.Vector2
+import me.gcx11.spacegame.core.Complex
 import me.gcx11.spacegame.core.Line
 import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.Shape
@@ -88,5 +90,23 @@ class CollisionUtilsTest {
 
         assertTrue(checkIntersectionBothWays(first, second))
         assertFalse(checkIntersectionBothWays(first, third))
+    }
+
+    @Test
+    fun complexShapes() {
+        val insidePoint = Point(Vector2(5f, 5f))
+        val outsidePoint = Point(Vector2(10f, 10f))
+
+        val lowerTriangle = Triangle(Vector2(0f, 0f), Vector2(0f, 9f), Vector2(9f, 0f))
+        val upperTriangle = Triangle(Vector2(0f, 9f), Vector2(9f, 0f), Vector2(9f, 9f))
+
+        val square = Complex(
+            setOf(lowerTriangle, upperTriangle)
+        )
+
+        assertTrue(checkIntersectionBothWays(square, insidePoint))
+        assertFalse(checkIntersectionBothWays(square, outsidePoint))
+        assertTrue(checkIntersectionBothWays(square, lowerTriangle))
+        assertTrue(checkIntersectionBothWays(square, upperTriangle))
     }
 }
