@@ -2,14 +2,13 @@ package me.gcx11.spacegame.core
 
 import com.badlogic.gdx.math.Intersector
 import com.badlogic.gdx.math.Vector2
-import kotlin.coroutines.experimental.buildSequence
 
 sealed class Shape {
     abstract fun intersectsWith(shape: Shape): Boolean
 }
 
 data class Point(
-        val position: Vector2
+    val position: Vector2
 ) : Shape() {
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
@@ -30,8 +29,8 @@ data class Point(
 }
 
 data class Line(
-        val first: Vector2,
-        val second: Vector2
+    val first: Vector2,
+    val second: Vector2
 ) : Shape() {
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
@@ -41,7 +40,7 @@ data class Line(
                 else if (shape.intersectsWith(Point(second)) || Point(second).intersectsWith(shape)) return true
 
                 Intersector.intersectSegments(
-                        first, second, shape.first, shape.second, null
+                    first, second, shape.first, shape.second, null
                 )
             }
             is Triangle -> {
@@ -56,9 +55,9 @@ data class Line(
 }
 
 data class Triangle(
-        val first: Vector2,
-        val second: Vector2,
-        val third: Vector2
+    val first: Vector2,
+    val second: Vector2,
+    val third: Vector2
 ) : Shape() {
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
@@ -86,26 +85,15 @@ data class Triangle(
 }
 
 data class Complex(
-        val shapes: Set<Shape>
+    val subShapes: Set<Shape>
 ) : Shape() {
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
-            is Point -> simpleShapes.all { shape.intersectsWith(it) }
-            is Line -> simpleShapes.all { shape.intersectsWith(it) }
-            is Triangle -> simpleShapes.all { shape.intersectsWith(it) }
-            is Complex -> simpleShapes.all { shape.intersectsWith(it) }
+            is Point -> subShapes.any { shape.intersectsWith(it) }
+            is Line -> subShapes.any { shape.intersectsWith(it) }
+            is Triangle -> subShapes.any { shape.intersectsWith(it) }
+            is Complex -> subShapes.any { shape.intersectsWith(it) }
         }
-    }
-
-    val simpleShapes: Set<Shape> by lazy {
-        buildSequence {
-            for (shape in shapes) {
-                when (shape) {
-                    is Complex -> yieldAll(shape.simpleShapes)
-                    else -> yield(shape)
-                }
-            }
-        }.toSet()
     }
 }
 

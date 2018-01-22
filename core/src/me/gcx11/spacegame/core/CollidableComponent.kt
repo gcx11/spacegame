@@ -14,8 +14,8 @@ interface CollidableComponent : DisposableComponent {
     fun collidesWith(collidable: CollidableComponent): Boolean {
         val selfGeo = parent.getRequiredComponent<GeometricComponent>()
         val otherGeo = collidable
-                .parent
-                .getOptionalComponent<me.gcx11.spacegame.spaceship.GeometricComponent>()
+            .parent
+            .getOptionalComponent<me.gcx11.spacegame.spaceship.GeometricComponent>()
         return otherGeo?.shape?.intersectsWith(selfGeo.shape) ?: false
     }
 }
