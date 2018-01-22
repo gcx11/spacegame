@@ -26,8 +26,9 @@ class GeometricComponent(
 
     val leftWingX get() = x - backSize * cos(directionAngle) - wingSize * sin(directionAngle)
     val leftWingY get() = y + wingSize * cos(directionAngle) - backSize * sin(directionAngle)
-    val rightWingX get() = x - wingSize * cos(directionAngle) + backSize * sin(directionAngle)
-    val rightWingY get() = y - backSize * cos(directionAngle) - wingSize * sin(directionAngle)
+
+    val rightWingX get() = x - backSize * cos(directionAngle) + wingSize * sin(directionAngle)
+    val rightWingY get() = y - wingSize * cos(directionAngle) - backSize * sin(directionAngle)
 
     override val shape: Shape
         get() {

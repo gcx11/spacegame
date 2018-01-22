@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import me.gcx11.spacegame.core.DisposableComponent
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.RenderableComponent
-import me.gcx11.spacegame.core.toScreenAngle
 import me.gcx11.spacegame.core.use
 
 class RenderableComponent(
@@ -21,15 +20,12 @@ class RenderableComponent(
                 shapeRenderer.use(color) {
                     identity()
 
-                    translate(it.x, it.y, 0f)
-                    rotate(0f, 0f, 1f, it.directionAngle.toScreenAngle())
-                    translate(-it.x, -it.y, 0f)
                     polygon(
                         arrayOf(
-                            it.x, it.y - it.noseSize,
-                            it.x - it.wingSize, it.y + it.noseSize + it.backSize,
+                            it.noseX, it.noseY,
+                            it.leftWingX, it.leftWingY,
                             it.x, it.y,
-                            it.x + it.wingSize, it.y + it.noseSize + it.backSize
+                            it.rightWingX, it.rightWingY
                         ).toFloatArray()
                     )
                 }
