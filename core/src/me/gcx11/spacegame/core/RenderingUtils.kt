@@ -7,11 +7,11 @@ import me.gcx11.spacegame.SpaceGame
 
 inline fun ShapeRenderer.use(
     color: Color,
-    projectionMatrix: Matrix4 = SpaceGame.camera.combined,
     shapeType: ShapeRenderer.ShapeType = ShapeRenderer.ShapeType.Line,
+    projectionMatrix: Matrix4 = SpaceGame.camera.combined,
     block: ShapeRenderer.() -> Unit
 ) {
-    this.projectionMatrix = projectionMatrix.cpy()
+    this.projectionMatrix = projectionMatrix
     this.begin(shapeType)
     this.color = color
     block(this)

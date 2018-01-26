@@ -4,6 +4,8 @@ import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.spaceship.GeometricComponent
 import me.gcx11.spacegame.spaceship.MoveBehaviourComponent
 import me.gcx11.spacegame.spaceship.RenderableComponent
+import kotlin.math.cos
+import kotlin.math.sin
 
 object BulletSpawner {
 
@@ -15,7 +17,9 @@ object BulletSpawner {
         return Entity.new().also {
             it.addComponent(
                 me.gcx11.spacegame.bullet.GeometricComponent(
-                    it, shooterGeo.noseX, shooterGeo.noseY, shooterGeo.directionAngle
+                    it, shooterGeo.noseX + 2f * cos(shooterGeo.directionAngle),
+                    shooterGeo.noseY + 2f * sin(shooterGeo.directionAngle),
+                    shooterGeo.directionAngle
                 )
             )
             it.addComponent(

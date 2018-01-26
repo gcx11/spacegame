@@ -29,7 +29,7 @@ class EnemyLogicComponent(
     }
 
     override fun canFire(): Boolean {
-        return false//isBehindEnemy()
+        return isBehindEnemy()
     }
 
     override fun canSpeedUp(): Boolean {

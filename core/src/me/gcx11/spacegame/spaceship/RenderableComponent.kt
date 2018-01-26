@@ -18,8 +18,6 @@ class RenderableComponent(
         parent.getOptionalComponent<GeometricComponent>()
             ?.let {
                 shapeRenderer.use(color) {
-                    identity()
-
                     polygon(
                         arrayOf(
                             it.noseX, it.noseY,

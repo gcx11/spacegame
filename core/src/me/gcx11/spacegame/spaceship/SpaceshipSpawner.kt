@@ -31,7 +31,7 @@ object SpaceshipSpawner {
     fun createEnemy(x: Float, y: Float): Entity {
         return createPrototype(x, y, Color.ORANGE).also {
             it.addComponent(RotateBehaviourComponent(it, 3f))
-            it.addComponent(MoveBehaviourComponent(it, 0f))
+            it.addComponent(MoveBehaviourComponent(it, 4f))
             it.addComponent(EnemyLogicComponent(it))
         }
     }
