@@ -4,12 +4,12 @@ import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.math.Vector2
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.CollidableComponent
 import me.gcx11.spacegame.core.Complex
 import me.gcx11.spacegame.core.DisposableComponent
 import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.RenderableComponent
 import me.gcx11.spacegame.core.Triangle
 import me.gcx11.spacegame.spaceship.GeometricComponent
@@ -84,22 +84,22 @@ class SpaceGame : ApplicationAdapter() {
                 camera.update(true)
             }
 
-        val leftUpper = Vector2(
+        val leftUpper = Point(
             camera.position.x - Gdx.graphics.width / 2f,
             camera.position.y - Gdx.graphics.height / 2f
         )
 
-        val rightUpper = Vector2(
+        val rightUpper = Point(
             camera.position.x + Gdx.graphics.width / 2f,
             camera.position.y - Gdx.graphics.height / 2f
         )
 
-        val leftLower = Vector2(
+        val leftLower = Point(
             camera.position.x - Gdx.graphics.width / 2f,
             camera.position.y + Gdx.graphics.height / 2f
         )
 
-        val rightLower = Vector2(
+        val rightLower = Point(
             camera.position.x + Gdx.graphics.width / 2f,
             camera.position.y + Gdx.graphics.height / 2f
         )

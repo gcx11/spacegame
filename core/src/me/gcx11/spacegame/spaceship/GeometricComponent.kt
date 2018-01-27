@@ -1,9 +1,9 @@
 package me.gcx11.spacegame.spaceship
 
-import com.badlogic.gdx.math.Vector2
 import me.gcx11.spacegame.core.Complex
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.GeometricComponent
+import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.Shape
 import me.gcx11.spacegame.core.Triangle
 import kotlin.math.cos
@@ -33,15 +33,15 @@ class GeometricComponent(
     override val shape: Shape
         get() {
             val leftTriangle = Triangle(
-                Vector2(noseX, noseY),
-                Vector2(leftWingX, leftWingY),
-                Vector2(x, y)
+                Point(noseX, noseY),
+                Point(leftWingX, leftWingY),
+                Point(x, y)
             )
 
             val rightTriangle = Triangle(
-                Vector2(noseX, noseY),
-                Vector2(rightWingX, rightWingY),
-                Vector2(x, y)
+                Point(noseX, noseY),
+                Point(rightWingX, rightWingY),
+                Point(x, y)
             )
             return Complex(setOf(leftTriangle, rightTriangle))
         }

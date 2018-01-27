@@ -1,6 +1,5 @@
 package me.gcx11.spacegame.star
 
-import com.badlogic.gdx.math.Vector2
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.GeometricComponent
 import me.gcx11.spacegame.core.Point
@@ -12,5 +11,5 @@ class GeometricComponent(
     val x: Float,
     val y: Float
 ) : GeometricComponent {
-    override val shape: Shape get() = Point(Vector2(x, y))
+    override val shape: Shape get() = Point(x, y)
 }

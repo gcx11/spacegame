@@ -4,15 +4,6 @@ class Entity(
     val id: Int,
     val components: MutableList<Component> = mutableListOf()
 ) {
-    override fun toString(): String {
-        val description = "Entity ${id} with " + buildString {
-            components.forEach {
-                append("\n\t")
-                append(it.toString())
-            }
-        }
-        return description
-    }
 
     fun addComponent(component: Component) {
         components.add(component)
@@ -36,6 +27,16 @@ class Entity(
 
     inline fun <reified T : Component> removeAllComponents() {
         components.removeAll { it is T }
+    }
+
+    override fun toString(): String {
+        val description = "Entity ${id} with " + buildString {
+            components.forEach {
+                append("\n\t")
+                append(it.toString())
+            }
+        }
+        return description
     }
 
     companion object {

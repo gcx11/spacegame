@@ -1,5 +1,4 @@
 
-import com.badlogic.gdx.math.Vector2
 import me.gcx11.spacegame.core.Complex
 import me.gcx11.spacegame.core.Line
 import me.gcx11.spacegame.core.Point
@@ -17,9 +16,9 @@ class CollisionUtilsTest {
 
     @Test
     fun pointWithPoint() {
-        val first = Point(Vector2(0f, 0f))
-        val second = Point(Vector2(0f, 0f))
-        val third = Point(Vector2(1f, 1f))
+        val first = Point(0f, 0f)
+        val second = Point(0f, 0f)
+        val third = Point(1f, 1f)
 
         assertTrue(checkIntersectionBothWays(first, second))
         assertFalse(checkIntersectionBothWays(first, third))
@@ -27,12 +26,12 @@ class CollisionUtilsTest {
 
     @Test
     fun pointWithLine() {
-        val line = Line(Vector2(0f, 0f), Vector2(1f, 1f))
-        val middle = Point(Vector2(0.5f, 0.5f))
-        val start = Point(Vector2(0f, 0f))
-        val end = Point(Vector2(1f, 1f))
-        val afterLine = Point(Vector2(2f, 2f))
-        val outCompletely = Point(Vector2(50f, -3f))
+        val line = Line(Point(0f, 0f), Point(1f, 1f))
+        val middle = Point(0.5f, 0.5f)
+        val start = Point(0f, 0f)
+        val end = Point(1f, 1f)
+        val afterLine = Point(2f, 2f)
+        val outCompletely = Point(50f, -3f)
 
         assertTrue(checkIntersectionBothWays(line, start))
         assertTrue(checkIntersectionBothWays(line, end))
@@ -43,11 +42,11 @@ class CollisionUtilsTest {
 
     @Test
     fun pointWithTriangle() {
-        val origin = Point(Vector2(0f, 0f))
-        val pointInside = Point(Vector2(0.3f, 0.2f))
-        val hypotenuseMiddle = Point(Vector2(0.5f, 0.5f))
-        val other = Point(Vector2(2f, 2f))
-        val triangle = Triangle(Vector2(0f, 0f), Vector2(1f, 0f), Vector2(0f, 1f))
+        val origin = Point(0f, 0f)
+        val pointInside = Point(0.3f, 0.2f)
+        val hypotenuseMiddle = Point(0.5f, 0.5f)
+        val other = Point(2f, 2f)
+        val triangle = Triangle(Point(0f, 0f), Point(1f, 0f), Point(0f, 1f))
 
         assertTrue(checkIntersectionBothWays(triangle, pointInside))
         assertTrue(checkIntersectionBothWays(triangle, origin))
@@ -57,9 +56,9 @@ class CollisionUtilsTest {
 
     @Test
     fun lineWithLine() {
-        val first = Line(Vector2(0f, 0f), Vector2(5f, 5f))
-        val second = Line(Vector2(3f, 0f), Vector2(0f, 3f))
-        val third = Line(Vector2(0f, 0f), Vector2(-5f, -5f))
+        val first = Line(Point(0f, 0f), Point(5f, 5f))
+        val second = Line(Point(3f, 0f), Point(0f, 3f))
+        val third = Line(Point(0f, 0f), Point(-5f, -5f))
 
         assertTrue(checkIntersectionBothWays(first, second))
         assertTrue(checkIntersectionBothWays(first, third))
@@ -68,10 +67,10 @@ class CollisionUtilsTest {
 
     @Test
     fun triangleWithLine() {
-        val triangle = Triangle(Vector2(0f, 0f), Vector2(1f, 0f), Vector2(0f, 1f))
-        val sameLine = Line(Vector2(0f, 0f), Vector2(1f, 0f))
-        val perpendicularLine = Line(Vector2(0.5f, -0.2f), Vector2(0.5f, 0.2f))
-        val otherLine = Line(Vector2(2f, 0f), Vector2(0f, 2f))
+        val triangle = Triangle(Point(0f, 0f), Point(1f, 0f), Point(0f, 1f))
+        val sameLine = Line(Point(0f, 0f), Point(1f, 0f))
+        val perpendicularLine = Line(Point(0.5f, -0.2f), Point(0.5f, 0.2f))
+        val otherLine = Line(Point(2f, 0f), Point(0f, 2f))
 
         assertTrue(checkIntersectionBothWays(triangle, sameLine))
         assertTrue(checkIntersectionBothWays(triangle, perpendicularLine))
@@ -80,12 +79,12 @@ class CollisionUtilsTest {
 
     @Test
     fun triangleWithTriangle() {
-        val first = Triangle(Vector2(0f, 0f), Vector2(1f, 0f), Vector2(0f, 1f))
+        val first = Triangle(Point(0f, 0f), Point(1f, 0f), Point(0f, 1f))
         val second = Triangle(
-            Vector2(0.25f, 0.25f), Vector2(1.25f, 0.25f), Vector2(0.25f, 1.25f)
+            Point(0.25f, 0.25f), Point(1.25f, 0.25f), Point(0.25f, 1.25f)
         )
         val third = Triangle(
-            Vector2(-0.25f, -0.25f), Vector2(-1.25f, -0.25f), Vector2(-0.25f, -1.25f)
+            Point(-0.25f, -0.25f), Point(-1.25f, -0.25f), Point(-0.25f, -1.25f)
         )
 
         assertTrue(checkIntersectionBothWays(first, second))
@@ -94,11 +93,11 @@ class CollisionUtilsTest {
 
     @Test
     fun complexShapes() {
-        val insidePoint = Point(Vector2(5f, 5f))
-        val outsidePoint = Point(Vector2(10f, 10f))
+        val insidePoint = Point(5f, 5f)
+        val outsidePoint = Point(10f, 10f)
 
-        val lowerTriangle = Triangle(Vector2(0f, 0f), Vector2(0f, 9f), Vector2(9f, 0f))
-        val upperTriangle = Triangle(Vector2(0f, 9f), Vector2(9f, 0f), Vector2(9f, 9f))
+        val lowerTriangle = Triangle(Point(0f, 0f), Point(0f, 9f), Point(9f, 0f))
+        val upperTriangle = Triangle(Point(0f, 9f), Point(9f, 0f), Point(9f, 9f))
 
         val square = Complex(
             setOf(lowerTriangle, upperTriangle)

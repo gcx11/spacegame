@@ -8,43 +8,46 @@ sealed class Shape {
 }
 
 data class Point(
-    val position: Vector2
+    val x: Float,
+    val y: Float
 ) : Shape() {
+    val vector: Vector2 = Vector2(x, y)
+
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
-            is Point -> position.epsilonEquals(shape.position)
+            is Point -> vector.epsilonEquals(shape.vector)
             is Line -> {
-                val vectorAC = position.cpy().sub(shape.first)
-                val vectorCB = shape.second.cpy().sub(position)
-                val vectorAB = shape.second.cpy().sub(shape.first)
+                val vectorAC = vector.cpy().sub(shape.first.vector)
+                val vectorCB = shape.second.vector.cpy().sub(vector)
+                val vectorAB = shape.second.vector.cpy().sub(shape.first.vector)
 
                 vectorAB.len() == vectorAC.len() + vectorCB.len()
             }
-            is Triangle -> position.isPointInsideTriangle(shape.first, shape.second, shape.third)
+            is Triangle -> this.isPointInsideTriangle(shape.first, shape.second, shape.third)
             is Complex -> shape.intersectsWith(this)
         }
     }
 
-    override fun toString() = "Point (${position.x}, ${position.y})"
+    override fun toString() = "Point ($x, $y)"
 }
 
 data class Line(
-    val first: Vector2,
-    val second: Vector2
+    val first: Point,
+    val second: Point
 ) : Shape() {
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
             is Point -> shape.intersectsWith(this)
             is Line -> {
-                if (shape.intersectsWith(Point(first)) || Point(first).intersectsWith(shape)) return true
-                else if (shape.intersectsWith(Point(second)) || Point(second).intersectsWith(shape)) return true
+                if (shape.intersectsWith(first) || first.intersectsWith(shape)) return true
+                else if (shape.intersectsWith(second) || second.intersectsWith(shape)) return true
 
                 Intersector.intersectSegments(
-                    first, second, shape.first, shape.second, null
+                    first.vector, second.vector, shape.first.vector, shape.second.vector, null
                 )
             }
             is Triangle -> {
-                shape.intersectsWith(Point(first)) || shape.intersectsWith(Point(second))
+                shape.intersectsWith(first) || shape.intersectsWith(second)
             }
             is Complex -> shape.intersectsWith(this)
         }
@@ -54,9 +57,9 @@ data class Line(
 }
 
 data class Triangle(
-    val first: Vector2,
-    val second: Vector2,
-    val third: Vector2
+    val first: Point,
+    val second: Point,
+    val third: Point
 ) : Shape() {
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
@@ -64,9 +67,9 @@ data class Triangle(
             is Line -> shape.intersectsWith(this)
             is Triangle -> {
                 vertices.any {
-                    shape.intersectsWith(Point(it))
+                    shape.intersectsWith(it)
                 } || shape.vertices.any {
-                    intersectsWith(Point(it))
+                    intersectsWith(it)
                 }
             }
             is Complex -> shape.intersectsWith(this)
@@ -96,10 +99,10 @@ data class Complex(
 }
 
 
-fun Vector2.isPointInsideTriangle(v1: Vector2, v2: Vector2, v3: Vector2): Boolean {
+fun Point.isPointInsideTriangle(p1: Point, p2: Point, p3: Point): Boolean {
     // check edges first
-    val triangle = Triangle(v1, v2, v3)
-    if (triangle.edges.any { it.intersectsWith(Point(Vector2(x, y))) }) return true
+    val triangle = Triangle(p1, p2, p3)
+    if (triangle.edges.any { it.intersectsWith(this) }) return true
 
-    return Intersector.isPointInTriangle(this, v1, v2, v3)
+    return Intersector.isPointInTriangle(vector, p1.vector, p2.vector, p3.vector)
 }
