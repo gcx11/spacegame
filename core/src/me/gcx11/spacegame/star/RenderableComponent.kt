@@ -14,7 +14,7 @@ class RenderableComponent(
 ) : RenderableComponent {
     override fun draw() {
         val visible = parent.getOptionalComponent<CollidableComponent>()
-            ?.collidedCollection?.isEmpty() ?: true
+            ?.allCollided()?.isEmpty() ?: true
 
         if (visible) {
             parent.getOptionalComponent<GeometricComponent>()

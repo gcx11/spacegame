@@ -30,10 +30,8 @@ class MoveBehaviourComponent(
                 val desiredSpeed = speed * movementPercentage
                 if (currentSpeed < desiredSpeed) {
                     currentSpeed += acceleration
-                    if (parent.id == 0) println("Speed up")
                 } else if (currentSpeed > desiredSpeed) {
                     currentSpeed -= acceleration
-                    if (parent.id == 0) println("Speed down")
                 }
 
                 it.x += currentSpeed * cos(it.directionAngle)

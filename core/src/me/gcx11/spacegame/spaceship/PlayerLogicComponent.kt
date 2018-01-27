@@ -15,9 +15,6 @@ class PlayerLogicComponent(
 ) : LogicComponent(parent) {
 
     override fun update(delta: Float) {
-        parent.getRequiredComponent<CollidableComponent>().allCollided().forEach {
-                println("Collided ${parent.id} with ${it.parent.id}")
-            }
     }
 
     override fun computeDirection(): Float {
@@ -46,7 +43,6 @@ class PlayerLogicComponent(
         val screenMin = min(Gdx.graphics.width / 2f, Gdx.graphics.height / 2f)
 
         val result = min(screenMin, hypot(abs(geo.x - vec.x), abs(geo.y - vec.y))) / screenMin
-        println(result)
         return result
     }
 }
