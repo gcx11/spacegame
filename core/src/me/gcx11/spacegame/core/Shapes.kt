@@ -8,10 +8,13 @@ sealed class Shape {
 }
 
 data class Point(
-    val x: Float,
-    val y: Float
+    var x: Float,
+    var y: Float
 ) : Shape() {
-    val vector: Vector2 = Vector2(x, y)
+    val vector: Vector2 by ReusableVector {
+        x = this@Point.x
+        y = this@Point.y
+    }
 
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
@@ -32,8 +35,8 @@ data class Point(
 }
 
 data class Line(
-    val first: Point,
-    val second: Point
+    var first: Point,
+    var second: Point
 ) : Shape() {
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {
@@ -57,9 +60,9 @@ data class Line(
 }
 
 data class Triangle(
-    val first: Point,
-    val second: Point,
-    val third: Point
+    var first: Point,
+    var second: Point,
+    var third: Point
 ) : Shape() {
     override fun intersectsWith(shape: Shape): Boolean {
         return when (shape) {

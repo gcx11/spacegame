@@ -4,7 +4,8 @@ import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.GeometricComponent
 import me.gcx11.spacegame.core.Line
 import me.gcx11.spacegame.core.Point
-import me.gcx11.spacegame.core.Shape
+import me.gcx11.spacegame.core.ReusableLine
+import me.gcx11.spacegame.core.ReusablePoint
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -20,13 +21,20 @@ class GeometricComponent(
     val endX get() = x + size * cos(directionAngle)
     val endY get() = y + size * sin(directionAngle)
 
-    override val shape: Shape
-        get() {
-            return Line(
-                Point(x, y),
-                Point(endX, endY)
-            )
-        }
+    var first: Point by ReusablePoint {
+        x = this@GeometricComponent.x
+        y = this@GeometricComponent.y
+    }
+
+    var second: Point by ReusablePoint {
+        x = endX
+        y = endY
+    }
+
+    override var shape: Line by ReusableLine {
+        first = this@GeometricComponent.first
+        second = this@GeometricComponent.second
+    }
 
     override fun toString(): String {
         return buildString {

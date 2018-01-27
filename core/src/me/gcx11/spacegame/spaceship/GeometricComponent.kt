@@ -4,6 +4,8 @@ import me.gcx11.spacegame.core.Complex
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.GeometricComponent
 import me.gcx11.spacegame.core.Point
+import me.gcx11.spacegame.core.ReusablePoint
+import me.gcx11.spacegame.core.ReusableTriangle
 import me.gcx11.spacegame.core.Shape
 import me.gcx11.spacegame.core.Triangle
 import kotlin.math.cos
@@ -30,19 +32,37 @@ class GeometricComponent(
     val rightWingX get() = x - backSize * cos(directionAngle) + wingSize * sin(directionAngle)
     val rightWingY get() = y - wingSize * cos(directionAngle) - backSize * sin(directionAngle)
 
-    override val shape: Shape
-        get() {
-            val leftTriangle = Triangle(
-                Point(noseX, noseY),
-                Point(leftWingX, leftWingY),
-                Point(x, y)
-            )
+    var nose: Point by ReusablePoint {
+        x = noseX
+        y = noseY
+    }
 
-            val rightTriangle = Triangle(
-                Point(noseX, noseY),
-                Point(rightWingX, rightWingY),
-                Point(x, y)
-            )
-            return Complex(setOf(leftTriangle, rightTriangle))
-        }
+    var leftWing: Point by ReusablePoint {
+        x = leftWingX
+        y = leftWingY
+    }
+
+    var rightWing: Point by ReusablePoint {
+        x = rightWingX
+        y = rightWingY
+    }
+
+    var center: Point by ReusablePoint {
+        x = this@GeometricComponent.x
+        y = this@GeometricComponent.y
+    }
+
+    var leftPart: Triangle by ReusableTriangle {
+        first = nose
+        second = leftWing
+        third = center
+    }
+
+    var rightPart: Triangle by ReusableTriangle {
+        first = nose
+        second = rightWing
+        third = center
+    }
+
+    override val shape: Shape get() = Complex(setOf(leftPart, rightPart))
 }
