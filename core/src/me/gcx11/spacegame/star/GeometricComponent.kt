@@ -2,7 +2,7 @@ package me.gcx11.spacegame.star
 
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.GeometricComponent
-import me.gcx11.spacegame.core.Point
+import me.gcx11.spacegame.core.ReusablePoint
 import me.gcx11.spacegame.core.Shape
 
 class GeometricComponent(
@@ -11,5 +11,9 @@ class GeometricComponent(
     val x: Float,
     val y: Float
 ) : GeometricComponent {
-    override val shape: Shape get() = Point(x, y)
+
+    override val shape: Shape by ReusablePoint {
+        x = this@GeometricComponent.x
+        y = this@GeometricComponent.y
+    }
 }
