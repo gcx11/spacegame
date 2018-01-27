@@ -8,10 +8,18 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-class CollisionUtilsTest {
+class ShapesTest {
 
     private fun checkIntersectionBothWays(first: Shape, second: Shape): Boolean {
         return first.intersectsWith(second) && second.intersectsWith(first)
+    }
+
+    @Test
+    fun originTest() {
+        val p = Point.origin
+        p.x = 1f
+        val q = Point.origin
+        assertTrue(q.x == 0f)
     }
 
     @Test

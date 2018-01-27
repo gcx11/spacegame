@@ -1,7 +1,6 @@
 package me.gcx11.spacegame.core
 
 import com.badlogic.gdx.math.Intersector
-import com.badlogic.gdx.math.Vector2
 
 sealed class Shape {
     abstract fun intersectsWith(shape: Shape): Boolean
@@ -11,7 +10,7 @@ data class Point(
     var x: Float,
     var y: Float
 ) : Shape() {
-    val vector: Vector2 by ReusableVector {
+    val vector by ReusableVector {
         x = this@Point.x
         y = this@Point.y
     }
@@ -32,6 +31,10 @@ data class Point(
     }
 
     override fun toString() = "Point ($x, $y)"
+
+    companion object {
+        val origin get() = Point(0f, 0f)
+    }
 }
 
 data class Line(

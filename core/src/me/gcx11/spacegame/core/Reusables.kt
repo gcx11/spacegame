@@ -7,7 +7,7 @@ import kotlin.reflect.KProperty
 class ReusablePoint(
     var func: Point.() -> Unit
 ) : ReadWriteProperty<Any, Point> {
-    private var point = Point(0f, 0f)
+    private var point = Point.origin
 
     override fun getValue(thisRef: Any, property: KProperty<*>): Point {
         func(point)
@@ -22,7 +22,7 @@ class ReusablePoint(
 class ReusableLine(
     var func: Line.() -> Unit
 ) : ReadWriteProperty<Any, Line> {
-    private var line = Line(Point(0f, 0f), Point(0f, 0f))
+    private var line = Line(Point.origin, Point.origin)
 
     override fun getValue(thisRef: Any, property: KProperty<*>): Line {
         func(line)
@@ -37,7 +37,7 @@ class ReusableLine(
 class ReusableTriangle(
     var func: Triangle.() -> Unit
 ) : ReadWriteProperty<Any, Triangle> {
-    private var triangle = Triangle(Point(0f, 0f), Point(0f, 0f), Point(0f, 0f))
+    private var triangle = Triangle(Point.origin, Point.origin, Point.origin)
 
     override fun getValue(thisRef: Any, property: KProperty<*>): Triangle {
         func(triangle)
@@ -52,7 +52,7 @@ class ReusableTriangle(
 class ReusableVector(
     var func: Vector2.() -> Unit
 ) : ReadWriteProperty<Any, Vector2> {
-    private var vector = Vector2(0f, 0f)
+    private var vector = Vector2.Zero.cpy()
 
     override fun getValue(thisRef: Any, property: KProperty<*>): Vector2 {
         func(vector)
