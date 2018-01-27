@@ -36,6 +36,10 @@ class EnemyLogicComponent(
         return isBehindEnemy()
     }
 
+    override fun computeSpeedPercentage(): Float {
+        return if (isBehindEnemy()) 0.5f else 1.0f
+    }
+
     private fun isBehindEnemy(): Boolean {
         val selfGeo = parent.getRequiredComponent<GeometricComponent>()
         val targetGeo = target?.getRequiredComponent<GeometricComponent>()

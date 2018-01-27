@@ -4,14 +4,19 @@ import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.math.Vector2
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.CollidableComponent
+import me.gcx11.spacegame.core.Complex
 import me.gcx11.spacegame.core.DisposableComponent
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.RenderableComponent
+import me.gcx11.spacegame.core.Triangle
 import me.gcx11.spacegame.spaceship.GeometricComponent
 import me.gcx11.spacegame.spaceship.PlayerLogicComponent
 import me.gcx11.spacegame.spaceship.SpaceshipSpawner
+import me.gcx11.spacegame.star.StarSpawner
+import java.util.*
 
 class SpaceGame : ApplicationAdapter() {
     companion object {
@@ -36,6 +41,13 @@ class SpaceGame : ApplicationAdapter() {
 
         entities.add(SpaceshipSpawner.createPlayer(0f, 0f))
         entities.add(SpaceshipSpawner.createEnemy(500f, 500f))
+
+        val random = Random()
+        for (i in 0 until 100) {
+            entities.add(
+                StarSpawner.createStar(1000 * random.nextFloat(), 1000 * random.nextFloat())
+            )
+        }
     }
 
     override fun render() {
@@ -65,14 +77,51 @@ class SpaceGame : ApplicationAdapter() {
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
         entities.firstOrNull { it.hasComponent<PlayerLogicComponent>() }
             ?.getOptionalComponent<GeometricComponent>()?.let {
                 camera.position.set(it.x, it.y, 0f)
-                camera.update()
+                camera.update(true)
             }
 
+        val leftUpper = Vector2(
+            camera.position.x - Gdx.graphics.width / 2f,
+            camera.position.y - Gdx.graphics.height / 2f
+        )
+
+        val rightUpper = Vector2(
+            camera.position.x + Gdx.graphics.width / 2f,
+            camera.position.y - Gdx.graphics.height / 2f
+        )
+
+        val leftLower = Vector2(
+            camera.position.x - Gdx.graphics.width / 2f,
+            camera.position.y + Gdx.graphics.height / 2f
+        )
+
+        val rightLower = Vector2(
+            camera.position.x + Gdx.graphics.width / 2f,
+            camera.position.y + Gdx.graphics.height / 2f
+        )
+
+        val cameraShape = Complex(
+            setOf(
+                Triangle(
+                    leftUpper, rightUpper, leftLower
+                ),
+                Triangle(
+                    leftLower, rightUpper, rightLower
+                )
+            )
+        )
+
         for (ent in entities) {
-            ent.getAllComponents<RenderableComponent>().forEach { it.draw() }
+            ent.getAllComponents<RenderableComponent>()
+                .filter {
+                    it.parent.getOptionalComponent<me.gcx11.spacegame.core.GeometricComponent>()
+                        ?.shape?.intersectsWith(cameraShape) ?: false
+                }
+                .forEach { it.draw() }
         }
     }
 

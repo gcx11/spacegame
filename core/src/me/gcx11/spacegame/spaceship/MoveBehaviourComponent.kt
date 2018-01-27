@@ -13,16 +13,31 @@ private class MoveModifier(
 class MoveBehaviourComponent(
     override val parent: Entity,
 
-    val defaultSpeed: Float = 5f
+    val defaultSpeed: Float = 5f,
+    val acceleration: Float = 0.02f,
+    var currentSpeed: Float = 0f
 ) : BehaviourComponent {
+    var movementPercentage: Float = 0.00f
+
     private var modifiers: MutableCollection<MoveModifier> = mutableListOf()
 
     val speed: Float get() = defaultSpeed * (1f + modifiers.map { it.percentage }.sum())
 
     override fun update(delta: Float) {
         parent.getOptionalComponent<GeometricComponent>()?.let {
-                it.x += speed * cos(it.directionAngle)
-                it.y += speed * sin(it.directionAngle)
+                movementPercentage = parent.getOptionalComponent<LogicComponent>()
+                    ?.computeSpeedPercentage() ?: 1.0f
+                val desiredSpeed = speed * movementPercentage
+                if (currentSpeed < desiredSpeed) {
+                    currentSpeed += acceleration
+                    if (parent.id == 0) println("Speed up")
+                } else if (currentSpeed > desiredSpeed) {
+                    currentSpeed -= acceleration
+                    if (parent.id == 0) println("Speed down")
+                }
+
+                it.x += currentSpeed * cos(it.directionAngle)
+                it.y += currentSpeed * sin(it.directionAngle)
             }
 
         modifiers.forEach { it.duration -= delta }

@@ -8,6 +8,7 @@ abstract class LogicComponent(
 ) : LogicComponent {
 
     abstract fun computeDirection(): Float
+    abstract fun computeSpeedPercentage(): Float
     abstract fun canFire(): Boolean
     abstract fun canSpeedUp(): Boolean
 }

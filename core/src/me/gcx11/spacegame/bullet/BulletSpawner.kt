@@ -25,7 +25,7 @@ object BulletSpawner {
             it.addComponent(
                 me.gcx11.spacegame.bullet.MoveBehaviourComponent(
                     it,
-                    speed = shooterMove.speed + 5f
+                    speed = shooterMove.speed + 2f
                 )
             )
             it.addComponent(me.gcx11.spacegame.bullet.RenderableComponent(it, color = shooterColor))

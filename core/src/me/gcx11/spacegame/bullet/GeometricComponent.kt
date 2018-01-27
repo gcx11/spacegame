@@ -13,7 +13,7 @@ class GeometricComponent(
 
     var x: Float,
     var y: Float,
-    val directionAngle: Float = 0f,
+    var directionAngle: Float = 0f,
 
     val size: Float = 5f
 ) : GeometricComponent {

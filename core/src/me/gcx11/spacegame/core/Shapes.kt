@@ -44,7 +44,7 @@ data class Line(
                 )
             }
             is Triangle -> {
-                shape.edges.any { it.intersectsWith(this) }
+                shape.intersectsWith(Point(first)) || shape.intersectsWith(Point(second))
             }
             is Complex -> shape.intersectsWith(this)
         }
@@ -63,10 +63,10 @@ data class Triangle(
             is Point -> shape.intersectsWith(this)
             is Line -> shape.intersectsWith(this)
             is Triangle -> {
-                edges.any {
-                    it.intersectsWith(shape)
-                } || shape.edges.any {
-                    it.intersectsWith(this)
+                vertices.any {
+                    shape.intersectsWith(Point(it))
+                } || shape.vertices.any {
+                    intersectsWith(Point(it))
                 }
             }
             is Complex -> shape.intersectsWith(this)
