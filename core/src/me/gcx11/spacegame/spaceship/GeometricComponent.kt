@@ -30,33 +30,33 @@ class GeometricComponent(
     val rightWingX get() = x - backSize * cos(directionAngle) + wingSize * sin(directionAngle)
     val rightWingY get() = y - wingSize * cos(directionAngle) - backSize * sin(directionAngle)
 
-    var nose by ReusablePoint {
+    val nose by ReusablePoint {
         x = noseX
         y = noseY
     }
 
-    var leftWing by ReusablePoint {
+    val leftWing by ReusablePoint {
         x = leftWingX
         y = leftWingY
     }
 
-    var rightWing by ReusablePoint {
+    val rightWing by ReusablePoint {
         x = rightWingX
         y = rightWingY
     }
 
-    var center by ReusablePoint {
+    val center by ReusablePoint {
         x = this@GeometricComponent.x
         y = this@GeometricComponent.y
     }
 
-    var leftPart by ReusableTriangle {
+    val leftPart by ReusableTriangle {
         first = nose
         second = leftWing
         third = center
     }
 
-    var rightPart by ReusableTriangle {
+    val rightPart by ReusableTriangle {
         first = nose
         second = rightWing
         third = center

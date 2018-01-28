@@ -19,17 +19,17 @@ class GeometricComponent(
     val endX get() = x + size * cos(directionAngle)
     val endY get() = y + size * sin(directionAngle)
 
-    var first by ReusablePoint {
+    val first by ReusablePoint {
         x = this@GeometricComponent.x
         y = this@GeometricComponent.y
     }
 
-    var second by ReusablePoint {
+    val second by ReusablePoint {
         x = endX
         y = endY
     }
 
-    override var shape by ReusableLine {
+    override val shape by ReusableLine {
         first = this@GeometricComponent.first
         second = this@GeometricComponent.second
     }
