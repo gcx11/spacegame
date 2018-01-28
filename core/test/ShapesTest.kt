@@ -16,9 +16,9 @@ class ShapesTest {
 
     @Test
     fun originTest() {
-        val p = Point.origin
+        val p = Point.default
         p.x = 1f
-        val q = Point.origin
+        val q = Point.default
         assertTrue(q.x == 0f)
     }
 

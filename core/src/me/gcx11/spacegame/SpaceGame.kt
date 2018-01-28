@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.CollidableComponent
+import me.gcx11.spacegame.core.ComposedFromTwo
 import me.gcx11.spacegame.core.DisposableComponent
 import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.RenderableComponent
-import me.gcx11.spacegame.core.ReusableComposedFromTwo
-import me.gcx11.spacegame.core.ReusablePoint
-import me.gcx11.spacegame.core.ReusableTriangle
+import me.gcx11.spacegame.core.Reusable
+import me.gcx11.spacegame.core.Triangle
 import me.gcx11.spacegame.spaceship.GeometricComponent
 import me.gcx11.spacegame.spaceship.PlayerLogicComponent
 import me.gcx11.spacegame.spaceship.SpaceshipSpawner
@@ -36,39 +37,39 @@ class SpaceGame : ApplicationAdapter() {
         }
     }
 
-    val leftUpper by ReusablePoint {
+    val leftUpper by Reusable(Point.default) {
         x = camera.position.x - Gdx.graphics.width / 2f
         y = camera.position.y - Gdx.graphics.height / 2f
     }
 
-    val rightUpper by ReusablePoint {
+    val rightUpper by Reusable(Point.default) {
         x = camera.position.x + Gdx.graphics.width / 2f
         y = camera.position.y - Gdx.graphics.height / 2f
     }
 
-    val leftLower by ReusablePoint {
+    val leftLower by Reusable(Point.default) {
         x = camera.position.x - Gdx.graphics.width / 2f
         y = camera.position.y + Gdx.graphics.height / 2f
     }
 
-    val rightLower by ReusablePoint {
+    val rightLower by Reusable(Point.default) {
         x = camera.position.x + Gdx.graphics.width / 2f
         y = camera.position.y + Gdx.graphics.height / 2f
     }
 
-    val leftTriangle by ReusableTriangle {
+    val leftTriangle by Reusable(Triangle.default) {
         first = leftUpper
         second = rightUpper
         third = leftLower
     }
 
-    val rightTriangle by ReusableTriangle {
+    val rightTriangle by Reusable(Triangle.default) {
         first = leftLower
         second = rightUpper
         third = rightLower
     }
 
-    val cameraShape by ReusableComposedFromTwo {
+    val cameraShape by Reusable(ComposedFromTwo.default) {
         first = leftTriangle
         second = rightTriangle
     }

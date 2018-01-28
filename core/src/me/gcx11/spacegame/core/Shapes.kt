@@ -1,6 +1,7 @@
 package me.gcx11.spacegame.core
 
 import com.badlogic.gdx.math.Intersector
+import com.badlogic.gdx.math.Vector2
 
 sealed class Shape {
     abstract fun intersectsWith(shape: Shape): Boolean
@@ -10,7 +11,7 @@ data class Point(
     var x: Float,
     var y: Float
 ) : Shape() {
-    val vector by ReusableVector {
+    val vector by Reusable(Vector2.Zero.cpy()) {
         x = this@Point.x
         y = this@Point.y
     }
@@ -33,7 +34,7 @@ data class Point(
     override fun toString() = "Point ($x, $y)"
 
     companion object {
-        val origin get() = Point(0f, 0f)
+        val default get() = Point(0f, 0f)
     }
 }
 
@@ -60,6 +61,10 @@ data class Line(
     }
 
     override fun toString() = "Line [(${first.x}, ${first.y}), (${second.x}, ${second.y})]"
+
+    companion object {
+        val default get() = Line(Point.default, Point.default)
+    }
 }
 
 data class Triangle(
@@ -67,17 +72,17 @@ data class Triangle(
     var second: Point,
     var third: Point
 ) : Shape() {
-    val firstLine by ReusableLine {
+    val firstLine by Reusable(Line(Point.default, Point.default)) {
         first = this@Triangle.first
         second = this@Triangle.second
     }
 
-    val secondLine by ReusableLine {
+    val secondLine by Reusable(Line(Point.default, Point.default)) {
         first = this@Triangle.second
         second = this@Triangle.third
     }
 
-    val thirdLine by ReusableLine {
+    val thirdLine by Reusable(Line(Point.default, Point.default)) {
         first = this@Triangle.third
         second = this@Triangle.first
     }
@@ -105,6 +110,10 @@ data class Triangle(
     override fun toString(): String {
         return "Triangle [(${first.x}, ${first.y}), (${second.x}, ${second.y}), (${third.x}, ${third.y})]"
     }
+
+    companion object {
+        val default get() = Triangle(Point.default, Point.default, Point.default)
+    }
 }
 
 data class ComposedFromTwo(
@@ -118,6 +127,10 @@ data class ComposedFromTwo(
             is Triangle -> shape.intersectsWith(first) || shape.intersectsWith(second)
             is ComposedFromTwo -> shape.intersectsWith(first) || shape.intersectsWith(second)
         }
+    }
+
+    companion object {
+        val default get() = ComposedFromTwo(Point.default, Point.default)
     }
 }
 

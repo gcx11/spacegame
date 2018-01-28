@@ -1,10 +1,11 @@
 package me.gcx11.spacegame.spaceship
 
+import me.gcx11.spacegame.core.ComposedFromTwo
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.GeometricComponent
-import me.gcx11.spacegame.core.ReusableComposedFromTwo
-import me.gcx11.spacegame.core.ReusablePoint
-import me.gcx11.spacegame.core.ReusableTriangle
+import me.gcx11.spacegame.core.Point
+import me.gcx11.spacegame.core.Reusable
+import me.gcx11.spacegame.core.Triangle
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -29,39 +30,39 @@ class GeometricComponent(
     val rightWingX get() = x - backSize * cos(directionAngle) + wingSize * sin(directionAngle)
     val rightWingY get() = y - wingSize * cos(directionAngle) - backSize * sin(directionAngle)
 
-    val nose by ReusablePoint {
+    val nose by Reusable(Point.default) {
         x = noseX
         y = noseY
     }
 
-    val leftWing by ReusablePoint {
+    val leftWing by Reusable(Point.default) {
         x = leftWingX
         y = leftWingY
     }
 
-    val rightWing by ReusablePoint {
+    val rightWing by Reusable(Point.default) {
         x = rightWingX
         y = rightWingY
     }
 
-    val center by ReusablePoint {
+    val center by Reusable(Point.default) {
         x = this@GeometricComponent.x
         y = this@GeometricComponent.y
     }
 
-    val leftPart by ReusableTriangle {
+    val leftPart by Reusable(Triangle.default) {
         first = nose
         second = leftWing
         third = center
     }
 
-    val rightPart by ReusableTriangle {
+    val rightPart by Reusable(Triangle.default) {
         first = nose
         second = rightWing
         third = center
     }
 
-    override val shape by ReusableComposedFromTwo {
+    override val shape by Reusable(ComposedFromTwo.default) {
         first = leftPart
         second = rightPart
     }
