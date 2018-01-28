@@ -1,5 +1,15 @@
 package me.gcx11.spacegame.core
 
+/**
+ * Entity - a basic game entity
+ *
+ * This class is intented to be used as a parent class
+ * and manager of stacked components [Component].
+ *
+ * @param id of current entity
+ * @param components creates mutable collection of objects of [Component]
+ * @sample [me.gcx11.spacegame.spaceship.RenderableComponent]
+ */
 class Entity(
     val id: Int,
     val components: MutableList<Component> = mutableListOf()
