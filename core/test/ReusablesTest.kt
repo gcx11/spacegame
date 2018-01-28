@@ -8,7 +8,7 @@ class ReusablesTest {
     var testX = 0f
     var testY = 0f
 
-    var point by ReusablePoint {
+    val point by ReusablePoint {
         x = testX
         y = testY
     }

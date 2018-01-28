@@ -1,11 +1,10 @@
 package me.gcx11.spacegame.spaceship
 
-import me.gcx11.spacegame.core.Complex
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.GeometricComponent
+import me.gcx11.spacegame.core.ReusableComposedFromTwo
 import me.gcx11.spacegame.core.ReusablePoint
 import me.gcx11.spacegame.core.ReusableTriangle
-import me.gcx11.spacegame.core.Shape
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -62,5 +61,8 @@ class GeometricComponent(
         third = center
     }
 
-    override val shape: Shape get() = Complex(setOf(leftPart, rightPart))
+    override val shape by ReusableComposedFromTwo {
+        first = leftPart
+        second = rightPart
+    }
 }

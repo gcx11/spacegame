@@ -18,14 +18,10 @@ class RenderableComponent(
         parent.getOptionalComponent<GeometricComponent>()
             ?.let {
                 shapeRenderer.use(color) {
-                    polygon(
-                        arrayOf(
-                            it.noseX, it.noseY,
-                            it.leftWingX, it.leftWingY,
-                            it.x, it.y,
-                            it.rightWingX, it.rightWingY
-                        ).toFloatArray()
-                    )
+                    line(it.nose.vector, it.leftWing.vector)
+                    line(it.leftWing.vector, it.center.vector)
+                    line(it.center.vector, it.rightWing.vector)
+                    line(it.rightWing.vector, it.nose.vector)
                 }
             }
     }

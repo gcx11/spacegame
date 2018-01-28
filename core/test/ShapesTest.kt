@@ -1,5 +1,5 @@
 
-import me.gcx11.spacegame.core.Complex
+import me.gcx11.spacegame.core.ComposedFromTwo
 import me.gcx11.spacegame.core.Line
 import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.Shape
@@ -107,9 +107,7 @@ class ShapesTest {
         val lowerTriangle = Triangle(Point(0f, 0f), Point(0f, 9f), Point(9f, 0f))
         val upperTriangle = Triangle(Point(0f, 9f), Point(9f, 0f), Point(9f, 9f))
 
-        val square = Complex(
-            setOf(lowerTriangle, upperTriangle)
-        )
+        val square = ComposedFromTwo(lowerTriangle, upperTriangle)
 
         assertTrue(checkIntersectionBothWays(square, insidePoint))
         assertFalse(checkIntersectionBothWays(square, outsidePoint))

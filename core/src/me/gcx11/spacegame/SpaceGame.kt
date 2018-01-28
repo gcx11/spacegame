@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import me.gcx11.spacegame.core.BehaviourComponent
 import me.gcx11.spacegame.core.CollidableComponent
-import me.gcx11.spacegame.core.Complex
 import me.gcx11.spacegame.core.DisposableComponent
 import me.gcx11.spacegame.core.Entity
-import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.RenderableComponent
-import me.gcx11.spacegame.core.Triangle
+import me.gcx11.spacegame.core.ReusableComposedFromTwo
+import me.gcx11.spacegame.core.ReusablePoint
+import me.gcx11.spacegame.core.ReusableTriangle
 import me.gcx11.spacegame.spaceship.GeometricComponent
 import me.gcx11.spacegame.spaceship.PlayerLogicComponent
 import me.gcx11.spacegame.spaceship.SpaceshipSpawner
@@ -34,6 +34,43 @@ class SpaceGame : ApplicationAdapter() {
         fun deleteLater(entity: Entity) {
             entitiesToDelete.add(entity)
         }
+    }
+
+    val leftUpper by ReusablePoint {
+        x = camera.position.x - Gdx.graphics.width / 2f
+        y = camera.position.y - Gdx.graphics.height / 2f
+    }
+
+    val rightUpper by ReusablePoint {
+        x = camera.position.x + Gdx.graphics.width / 2f
+        y = camera.position.y - Gdx.graphics.height / 2f
+    }
+
+    val leftLower by ReusablePoint {
+        x = camera.position.x - Gdx.graphics.width / 2f
+        y = camera.position.y + Gdx.graphics.height / 2f
+    }
+
+    val rightLower by ReusablePoint {
+        x = camera.position.x + Gdx.graphics.width / 2f
+        y = camera.position.y + Gdx.graphics.height / 2f
+    }
+
+    val leftTriangle by ReusableTriangle {
+        first = leftUpper
+        second = rightUpper
+        third = leftLower
+    }
+
+    val rightTriangle by ReusableTriangle {
+        first = leftLower
+        second = rightUpper
+        third = rightLower
+    }
+
+    val cameraShape by ReusableComposedFromTwo {
+        first = leftTriangle
+        second = rightTriangle
     }
 
     override fun create() {
@@ -83,37 +120,6 @@ class SpaceGame : ApplicationAdapter() {
                 camera.position.set(it.x, it.y, 0f)
                 camera.update(true)
             }
-
-        val leftUpper = Point(
-            camera.position.x - Gdx.graphics.width / 2f,
-            camera.position.y - Gdx.graphics.height / 2f
-        )
-
-        val rightUpper = Point(
-            camera.position.x + Gdx.graphics.width / 2f,
-            camera.position.y - Gdx.graphics.height / 2f
-        )
-
-        val leftLower = Point(
-            camera.position.x - Gdx.graphics.width / 2f,
-            camera.position.y + Gdx.graphics.height / 2f
-        )
-
-        val rightLower = Point(
-            camera.position.x + Gdx.graphics.width / 2f,
-            camera.position.y + Gdx.graphics.height / 2f
-        )
-
-        val cameraShape = Complex(
-            setOf(
-                Triangle(
-                    leftUpper, rightUpper, leftLower
-                ),
-                Triangle(
-                    leftLower, rightUpper, rightLower
-                )
-            )
-        )
 
         for (ent in entities) {
             ent.getAllComponents<RenderableComponent>()

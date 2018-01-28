@@ -37,6 +37,17 @@ class ReusableTriangle(
     }
 }
 
+class ReusableComposedFromTwo(
+    var func: ComposedFromTwo.() -> Unit
+) : ReadOnlyProperty<Any, ComposedFromTwo> {
+    private var complex = ComposedFromTwo(Point.origin, Point.origin)
+
+    override fun getValue(thisRef: Any, property: KProperty<*>): ComposedFromTwo {
+        func(complex)
+        return complex
+    }
+}
+
 class ReusableVector(
     var func: Vector2.() -> Unit
 ) : ReadOnlyProperty<Any, Vector2> {
