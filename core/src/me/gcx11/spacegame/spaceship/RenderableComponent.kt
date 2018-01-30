@@ -17,11 +17,17 @@ class RenderableComponent(
     override fun draw() {
         parent.getOptionalComponent<GeometricComponent>()
             ?.let {
-                shapeRenderer.use(color) {
-                    line(it.nose.vector, it.leftWing.vector)
-                    line(it.leftWing.vector, it.center.vector)
-                    line(it.center.vector, it.rightWing.vector)
-                    line(it.rightWing.vector, it.nose.vector)
+                shapeRenderer.use(color, shapeType = ShapeRenderer.ShapeType.Filled) {
+                    triangle(
+                        it.leftPart.first.x, it.leftPart.first.y,
+                        it.leftPart.second.x, it.leftPart.second.y,
+                        it.leftPart.third.x, it.leftPart.third.y
+                    )
+                    triangle(
+                        it.rightPart.first.x, it.rightPart.first.y,
+                        it.rightPart.second.x, it.rightPart.second.y,
+                        it.rightPart.third.x, it.rightPart.third.y
+                    )
                 }
             }
     }

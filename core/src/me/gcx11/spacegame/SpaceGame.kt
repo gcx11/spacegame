@@ -13,6 +13,7 @@ import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.RenderableComponent
 import me.gcx11.spacegame.core.Reusable
 import me.gcx11.spacegame.core.Triangle
+import me.gcx11.spacegame.meteor.MeteorSpawner
 import me.gcx11.spacegame.spaceship.GeometricComponent
 import me.gcx11.spacegame.spaceship.PlayerLogicComponent
 import me.gcx11.spacegame.spaceship.SpaceshipSpawner
@@ -79,6 +80,8 @@ class SpaceGame : ApplicationAdapter() {
 
         entities.add(SpaceshipSpawner.createPlayer(0f, 0f))
         entities.add(SpaceshipSpawner.createEnemy(500f, 500f))
+
+        entities.add(MeteorSpawner.createMeteor(300f, 300f))
 
         val random = Random()
         for (i in 0 until 100) {
