@@ -28,6 +28,7 @@ data class Point(
             }
             is Triangle -> this.isPointInsideTriangle(shape)
             is ComposedFromTwo -> shape.intersectsWith(this)
+            is Composed -> shape.intersectsWith(this)
         }
     }
 
@@ -57,6 +58,7 @@ data class Line(
                 shape.intersectsWith(first) || shape.intersectsWith(second)
             }
             is ComposedFromTwo -> shape.intersectsWith(this)
+            is Composed -> shape.intersectsWith(this)
         }
     }
 
@@ -100,6 +102,7 @@ data class Triangle(
                     first.isPointInsideTriangle(shape)
             }
             is ComposedFromTwo -> shape.intersectsWith(this)
+            is Composed -> shape.intersectsWith(this)
         }
     }
 
@@ -126,11 +129,30 @@ data class ComposedFromTwo(
             is Line -> shape.intersectsWith(first) || shape.intersectsWith(second)
             is Triangle -> shape.intersectsWith(first) || shape.intersectsWith(second)
             is ComposedFromTwo -> shape.intersectsWith(first) || shape.intersectsWith(second)
+            is Composed -> shape.intersectsWith(first) || shape.intersectsWith(second)
         }
     }
 
     companion object {
         val default get() = ComposedFromTwo(Point.default, Point.default)
+    }
+}
+
+data class Composed(
+    val subShapes: MutableList<Shape>
+) : Shape() {
+    override fun intersectsWith(shape: Shape): Boolean {
+        return when (shape) {
+            is Point -> subShapes.any { it.intersectsWith(shape) }
+            is Line -> subShapes.any { it.intersectsWith(shape) }
+            is Triangle -> subShapes.any { it.intersectsWith(shape) }
+            is ComposedFromTwo -> subShapes.any { it.intersectsWith(shape) }
+            is Composed -> subShapes.any { it.intersectsWith(shape) }
+        }
+    }
+
+    companion object {
+        val default get() = Composed(mutableListOf())
     }
 }
 
