@@ -1,5 +1,6 @@
 package me.gcx11.spacegame.bullet
 
+import me.gcx11.spacegame.core.DefaultCollidableComponent
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.spaceship.GeometricComponent
 import me.gcx11.spacegame.spaceship.MoveBehaviourComponent
@@ -29,7 +30,7 @@ object BulletSpawner {
                 )
             )
             it.addComponent(me.gcx11.spacegame.bullet.RenderableComponent(it, color = shooterColor))
-            it.addComponent(me.gcx11.spacegame.bullet.CollidableComponent(it))
+            it.addComponent(DefaultCollidableComponent(it))
         }
     }
 }
