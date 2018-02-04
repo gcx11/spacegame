@@ -5,33 +5,44 @@ import me.gcx11.spacegame.core.Entity
 class EnemyLogicComponent(
     parent: Entity
 ) : LogicComponent(parent) {
-    var currentState: EnemyBehaviourState = EnemyBehaviourState.WAITING
+    private var scripts = mutableListOf(
+        WanderScript(this, 0),
+        AttackScript(this, 1)
+    )
+    var currentScript: LogicScript? = null
+
+    var direction: Float = 0f
+    var canSpeedUp: Boolean = false
+    var speedPercentage: Float = 0f
+    var canFire: Boolean = false
 
     override fun update(delta: Float) {
-        val newState = states.first { it.needActivate(this) }
+        scripts.sortByDescending { it.priority }
 
-        if (newState != currentState) currentState.onDisable()
-        currentState = newState
+        val newScript = scripts.firstOrNull { it.needActivation() }
 
-        currentState.updateLogic(this)
+        if (newScript != currentScript) {
+            currentScript?.disable()
+            currentScript = newScript
+            currentScript?.enable()
+        }
+
+        currentScript?.update(delta)
     }
 
     override fun computeDirection(): Float {
-        return currentState.computeDirection(this)
+        return direction
     }
 
     override fun canSpeedUp(): Boolean {
-        return currentState.canSpeedUp(this)
+        return canSpeedUp
     }
 
     override fun computeSpeedPercentage(): Float {
-        return currentState.computeSpeedPercentage(this)
+        return speedPercentage
     }
 
     override fun canFire(): Boolean {
-        return currentState.canFire(this)
+        return canFire
     }
-
-    var states = arrayOf(EnemyBehaviourState.WAITING, EnemyBehaviourState.ATTACKING)
-        .sortedByDescending { it.priority }
 }
