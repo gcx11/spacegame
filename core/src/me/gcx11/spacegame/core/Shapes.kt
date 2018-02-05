@@ -2,9 +2,13 @@ package me.gcx11.spacegame.core
 
 import com.badlogic.gdx.math.Intersector
 import com.badlogic.gdx.math.Vector2
+import kotlin.math.abs
+import kotlin.math.atan2
+import kotlin.math.hypot
 
 sealed class Shape {
     abstract fun intersectsWith(shape: Shape): Boolean
+    abstract fun points(): Iterable<Point>
 }
 
 data class Point(
@@ -32,7 +36,19 @@ data class Point(
         }
     }
 
+    override fun points(): Iterable<Point> {
+        return listOf(this)
+    }
+
     override fun toString() = "Point ($x, $y)"
+
+    fun angleWith(other: Point): Float {
+        return atan2(other.y - y, other.x - x)
+    }
+
+    fun distanceTo(other: Point): Float {
+        return hypot(abs(other.y - y), abs(other.x - x))
+    }
 
     companion object {
         val default get() = Point(0f, 0f)
@@ -60,6 +76,10 @@ data class Line(
             is ComposedFromTwo -> shape.intersectsWith(this)
             is Composed -> shape.intersectsWith(this)
         }
+    }
+
+    override fun points(): Iterable<Point> {
+        return listOf(first, second)
     }
 
     override fun toString() = "Line [(${first.x}, ${first.y}), (${second.x}, ${second.y})]"
@@ -106,6 +126,10 @@ data class Triangle(
         }
     }
 
+    override fun points(): Iterable<Point> {
+        return listOf(first, second, third)
+    }
+
     val vertices get() = arrayOf(first, second, third)
 
     val edges get() = arrayOf(firstLine, secondLine, thirdLine)
@@ -133,6 +157,10 @@ data class ComposedFromTwo(
         }
     }
 
+    override fun points(): Iterable<Point> {
+        return first.points() + second.points()
+    }
+
     companion object {
         val default get() = ComposedFromTwo(Point.default, Point.default)
     }
@@ -149,6 +177,10 @@ data class Composed(
             is ComposedFromTwo -> subShapes.any { it.intersectsWith(shape) }
             is Composed -> subShapes.any { it.intersectsWith(shape) }
         }
+    }
+
+    override fun points(): Iterable<Point> {
+        return subShapes.flatMap { it.points() }
     }
 
     companion object {

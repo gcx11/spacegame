@@ -23,7 +23,7 @@ class AttackScript(
         component.canFire = isBehindEnemy
         component.canSpeedUp = !isBehindEnemy
         component.direction = computeDirection()
-        component.speedPercentage = if (isBehindEnemy) 0.5f else 1.0f
+        component.speedPercentage = 1.0f
     }
 
     override fun enable() {
@@ -44,7 +44,7 @@ class AttackScript(
         val targetGeo = enemy?.getRequiredComponent<GeometricComponent>()
 
         if (targetGeo != null) {
-            return hypot(abs(selfGeo.x - targetGeo.x), abs(selfGeo.y - targetGeo.y)) <= 200f
+            return hypot(abs(selfGeo.x - targetGeo.x), abs(selfGeo.y - targetGeo.y)) <= 500f
         } else {
             return false
         }

@@ -7,7 +7,8 @@ class EnemyLogicComponent(
 ) : LogicComponent(parent) {
     private var scripts = mutableListOf(
         WanderScript(this, 0),
-        AttackScript(this, 1)
+        AttackScript(this, 1),
+        AntiCollideScript(this, 2)
     )
     var currentScript: LogicScript? = null
 

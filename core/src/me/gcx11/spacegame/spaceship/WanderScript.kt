@@ -30,7 +30,7 @@ class WanderScript(
         component.direction = atan2(destination!!.x - shipGeo.x, destination!!.y - shipGeo.y)
         component.canFire = false
         component.canSpeedUp = false
-        component.speedPercentage = 0.2f
+        component.speedPercentage = 0.3f
     }
 
     override fun enable() {
