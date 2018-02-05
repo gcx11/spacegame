@@ -1,51 +1,49 @@
 package me.gcx11.spacegame.spaceship
 
-import me.gcx11.spacegame.SpaceGame
 import me.gcx11.spacegame.core.Entity
-import kotlin.math.abs
-import kotlin.math.atan2
 
 class EnemyLogicComponent(
     parent: Entity
 ) : LogicComponent(parent) {
-    private var target: Entity? = null
+    private var scripts = mutableListOf(
+        WanderScript(this, 0),
+        AttackScript(this, 1),
+        AntiCollideScript(this, 2)
+    )
+    var currentScript: LogicScript? = null
+
+    var direction: Float = 0f
+    var canSpeedUp: Boolean = false
+    var speedPercentage: Float = 0f
+    var canFire: Boolean = false
 
     override fun update(delta: Float) {
-        target = SpaceGame.entitiesReadOnly.firstOrNull { it.hasComponent<PlayerLogicComponent>() }
+        scripts.sortByDescending { it.priority }
+
+        val newScript = scripts.firstOrNull { it.needActivation() }
+
+        if (newScript != currentScript) {
+            currentScript?.disable()
+            currentScript = newScript
+            currentScript?.enable()
+        }
+
+        currentScript?.update(delta)
     }
 
     override fun computeDirection(): Float {
-        val selfGeo = parent.getRequiredComponent<GeometricComponent>()
-        val targetGeo = target?.getRequiredComponent<GeometricComponent>()
-
-        if (targetGeo != null) {
-            return atan2(targetGeo.y - selfGeo.y, targetGeo.x - selfGeo.x)
-        } else {
-            return selfGeo.directionAngle
-        }
-    }
-
-    override fun canFire(): Boolean {
-        return isBehindEnemy()
+        return direction
     }
 
     override fun canSpeedUp(): Boolean {
-        return isBehindEnemy()
+        return canSpeedUp
     }
 
     override fun computeSpeedPercentage(): Float {
-        return if (isBehindEnemy()) 0.5f else 1.0f
+        return speedPercentage
     }
 
-    private fun isBehindEnemy(): Boolean {
-        val selfGeo = parent.getRequiredComponent<GeometricComponent>()
-        val targetGeo = target?.getRequiredComponent<GeometricComponent>()
-
-        if (targetGeo != null) {
-            val enemyDirection = atan2(targetGeo.y - selfGeo.y, targetGeo.x - selfGeo.x)
-            return abs(selfGeo.directionAngle - enemyDirection) < 0.5f
-        } else {
-            return false
-        }
+    override fun canFire(): Boolean {
+        return canFire
     }
 }

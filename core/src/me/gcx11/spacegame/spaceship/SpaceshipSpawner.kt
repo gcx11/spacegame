@@ -23,17 +23,17 @@ object SpaceshipSpawner {
 
     fun createPlayer(x: Float, y: Float): Entity {
         return createPrototype(x, y, Color.RED).also {
-            it.addComponent(RotateBehaviourComponent(it))
             it.addComponent(MoveBehaviourComponent(it))
             it.addComponent(PlayerLogicComponent(it))
+            it.addComponent(RotateBehaviourComponent(it))
         }
     }
 
     fun createEnemy(x: Float, y: Float): Entity {
         return createPrototype(x, y, Color.ORANGE).also {
-            it.addComponent(RotateBehaviourComponent(it, 3f))
             it.addComponent(MoveBehaviourComponent(it, 4f))
             it.addComponent(EnemyLogicComponent(it))
+            it.addComponent(RotateBehaviourComponent(it, 3f))
         }
     }
 }
