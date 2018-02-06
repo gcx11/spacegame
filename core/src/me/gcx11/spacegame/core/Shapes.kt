@@ -30,6 +30,7 @@ data class Point(
 
                 vectorAB.len() == vectorAC.len() + vectorCB.len()
             }
+            is Circle -> shape.center.vector.dst(this.vector) <= shape.radius
             is Triangle -> this.isPointInsideTriangle(shape)
             is ComposedFromTwo -> shape.intersectsWith(this)
             is Composed -> shape.intersectsWith(this)
@@ -70,6 +71,7 @@ data class Line(
                     first.vector, second.vector, shape.first.vector, shape.second.vector, null
                 )
             }
+            is Circle -> this.points().any { it.intersectsWith(shape) }
             is Triangle -> {
                 shape.intersectsWith(first) || shape.intersectsWith(second)
             }
@@ -86,6 +88,31 @@ data class Line(
 
     companion object {
         val default get() = Line(Point.default, Point.default)
+    }
+}
+
+data class Circle(
+    var center: Point,
+    var radius: Float
+) : Shape() {
+
+    override fun intersectsWith(shape: Shape): Boolean {
+        return when (shape) {
+            is Point -> shape.intersectsWith(this)
+            is Line -> shape.intersectsWith(this)
+            is Circle -> this.center.vector.dst(shape.center.vector) <= maxOf(this.radius, shape.radius)
+            is Triangle -> shape.points().any { it.intersectsWith(this) }
+            is ComposedFromTwo -> shape.intersectsWith(this)
+            is Composed -> shape.intersectsWith(this)
+        }
+    }
+
+    override fun points(): Iterable<Point> {
+        return listOf(center)
+    }
+
+    companion object {
+        val default get() = Circle(Point.default, 1F)
     }
 }
 
@@ -121,6 +148,7 @@ data class Triangle(
                     second.isPointInsideTriangle(shape) ||
                     first.isPointInsideTriangle(shape)
             }
+            is Circle -> this.points().any { it.intersectsWith(shape) }
             is ComposedFromTwo -> shape.intersectsWith(this)
             is Composed -> shape.intersectsWith(this)
         }
@@ -129,10 +157,6 @@ data class Triangle(
     override fun points(): Iterable<Point> {
         return listOf(first, second, third)
     }
-
-    val vertices get() = arrayOf(first, second, third)
-
-    val edges get() = arrayOf(firstLine, secondLine, thirdLine)
 
     override fun toString(): String {
         return "Triangle [(${first.x}, ${first.y}), (${second.x}, ${second.y}), (${third.x}, ${third.y})]"
@@ -152,6 +176,7 @@ data class ComposedFromTwo(
             is Point -> shape.intersectsWith(first) || shape.intersectsWith(second)
             is Line -> shape.intersectsWith(first) || shape.intersectsWith(second)
             is Triangle -> shape.intersectsWith(first) || shape.intersectsWith(second)
+            is Circle -> shape.intersectsWith(first) || shape.intersectsWith(second)
             is ComposedFromTwo -> shape.intersectsWith(first) || shape.intersectsWith(second)
             is Composed -> shape.intersectsWith(first) || shape.intersectsWith(second)
         }
@@ -174,6 +199,7 @@ data class Composed(
             is Point -> subShapes.any { it.intersectsWith(shape) }
             is Line -> subShapes.any { it.intersectsWith(shape) }
             is Triangle -> subShapes.any { it.intersectsWith(shape) }
+            is Circle -> subShapes.any { it.intersectsWith(shape) }
             is ComposedFromTwo -> subShapes.any { it.intersectsWith(shape) }
             is Composed -> subShapes.any { it.intersectsWith(shape) }
         }
@@ -191,11 +217,13 @@ data class Composed(
 
 fun Point.isPointInsideTriangle(triangle: Triangle): Boolean {
     // check edges first
-    if (triangle.firstLine.intersectsWith(this)) return true
-    else if (triangle.secondLine.intersectsWith(this)) return true
-    else if (triangle.thirdLine.intersectsWith(this)) return true
+    when {
+        triangle.firstLine.intersectsWith(this) -> return true
+        triangle.secondLine.intersectsWith(this) -> return true
+        triangle.thirdLine.intersectsWith(this) -> return true
+        else -> return Intersector.isPointInTriangle(
+            vector, triangle.first.vector, triangle.second.vector, triangle.third.vector
+        )
+    }
 
-    return Intersector.isPointInTriangle(
-        vector, triangle.first.vector, triangle.second.vector, triangle.third.vector
-    )
 }
