@@ -1,4 +1,4 @@
-package me.gcx11.spacegame.core
+package me.gcx11.spacegame.core.components
 
 interface CollidableComponent : DisposableComponent {
     val collidedCollection: MutableCollection<CollidableComponent>

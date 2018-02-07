@@ -2,10 +2,10 @@ package me.gcx11.spacegame.bullet
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import me.gcx11.spacegame.core.DisposableComponent
+import me.gcx11.spacegame.core.components.DisposableComponent
 import me.gcx11.spacegame.core.Entity
-import me.gcx11.spacegame.core.RenderableComponent
-import me.gcx11.spacegame.core.use
+import me.gcx11.spacegame.core.components.RenderableComponent
+import me.gcx11.spacegame.core.utils.use
 
 class RenderableComponent(
     override val parent: Entity,

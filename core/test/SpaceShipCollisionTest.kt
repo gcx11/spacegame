@@ -1,4 +1,4 @@
-import me.gcx11.spacegame.core.CollidableComponent
+import me.gcx11.spacegame.core.components.CollidableComponent
 import me.gcx11.spacegame.spaceship.SpaceshipSpawner.createMinimalPrototype
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

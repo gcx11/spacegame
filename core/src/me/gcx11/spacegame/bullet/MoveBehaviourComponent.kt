@@ -1,7 +1,7 @@
 package me.gcx11.spacegame.bullet
 
 import me.gcx11.spacegame.SpaceGame
-import me.gcx11.spacegame.core.BehaviourComponent
+import me.gcx11.spacegame.core.components.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
 import kotlin.math.cos
 import kotlin.math.sin

@@ -1,7 +1,7 @@
 package me.gcx11.spacegame.spaceship
 
 import com.badlogic.gdx.graphics.Color
-import me.gcx11.spacegame.core.DefaultCollidableComponent
+import me.gcx11.spacegame.core.components.DefaultCollidableComponent
 import me.gcx11.spacegame.core.Entity
 
 object SpaceshipSpawner {

@@ -1,8 +1,8 @@
 package me.gcx11.spacegame.spaceship
 
 import me.gcx11.spacegame.SpaceGame
-import me.gcx11.spacegame.core.CollidableComponent
-import me.gcx11.spacegame.core.PI_FLOAT
+import me.gcx11.spacegame.core.components.CollidableComponent
+import me.gcx11.spacegame.core.utils.PI_FLOAT
 import me.gcx11.spacegame.core.Point
 import kotlin.math.abs
 
@@ -52,7 +52,7 @@ class AntiCollideScript(
                 it != component.parent && it.hasComponent<CollidableComponent>()
             }
             .flatMap {
-                it.getRequiredComponent<me.gcx11.spacegame.core.GeometricComponent>().shape.points()
+                it.getRequiredComponent<me.gcx11.spacegame.core.components.GeometricComponent>().shape.points()
             }
             .filter { p ->
                 selfGeo.shape.points().any { it.distanceTo(p) <= 30f }

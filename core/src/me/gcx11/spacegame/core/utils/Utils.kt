@@ -1,4 +1,4 @@
-package me.gcx11.spacegame.core
+package me.gcx11.spacegame.core.utils
 
 import java.util.*
 import kotlin.math.PI

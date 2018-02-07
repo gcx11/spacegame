@@ -1,7 +1,7 @@
 package me.gcx11.spacegame.spaceship
 
 import me.gcx11.spacegame.core.Point
-import me.gcx11.spacegame.core.inRange
+import me.gcx11.spacegame.core.utils.inRange
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.atan2

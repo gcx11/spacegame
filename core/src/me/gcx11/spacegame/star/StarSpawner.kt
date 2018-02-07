@@ -1,6 +1,6 @@
 package me.gcx11.spacegame.star
 
-import me.gcx11.spacegame.core.DefaultCollidableComponent
+import me.gcx11.spacegame.core.components.DefaultCollidableComponent
 import me.gcx11.spacegame.core.Entity
 
 object StarSpawner {

@@ -1,10 +1,10 @@
 package me.gcx11.spacegame.bullet
 
 import me.gcx11.spacegame.core.Entity
-import me.gcx11.spacegame.core.GeometricComponent
 import me.gcx11.spacegame.core.Line
 import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.Reusable
+import me.gcx11.spacegame.core.components.GeometricComponent
 import kotlin.math.cos
 import kotlin.math.sin
 

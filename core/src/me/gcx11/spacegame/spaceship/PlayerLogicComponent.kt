@@ -3,7 +3,7 @@ package me.gcx11.spacegame.spaceship
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import me.gcx11.spacegame.SpaceGame
-import me.gcx11.spacegame.core.CameraComponent
+import me.gcx11.spacegame.core.components.CameraComponent
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.Point
 import kotlin.math.abs

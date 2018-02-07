@@ -3,12 +3,12 @@ package me.gcx11.spacegame
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
-import me.gcx11.spacegame.core.BehaviourComponent
-import me.gcx11.spacegame.core.CameraComponent
-import me.gcx11.spacegame.core.CollidableComponent
-import me.gcx11.spacegame.core.DisposableComponent
 import me.gcx11.spacegame.core.Entity
-import me.gcx11.spacegame.core.RenderableComponent
+import me.gcx11.spacegame.core.components.BehaviourComponent
+import me.gcx11.spacegame.core.components.CameraComponent
+import me.gcx11.spacegame.core.components.CollidableComponent
+import me.gcx11.spacegame.core.components.DisposableComponent
+import me.gcx11.spacegame.core.components.RenderableComponent
 import me.gcx11.spacegame.meteor.MeteorSpawner
 import me.gcx11.spacegame.spaceship.SpaceshipSpawner
 import me.gcx11.spacegame.star.StarSpawner

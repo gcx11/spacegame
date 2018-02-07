@@ -1,6 +1,6 @@
 package me.gcx11.spacegame.bullet
 
-import me.gcx11.spacegame.core.DefaultCollidableComponent
+import me.gcx11.spacegame.core.components.DefaultCollidableComponent
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.spaceship.GeometricComponent
 import me.gcx11.spacegame.spaceship.MoveBehaviourComponent

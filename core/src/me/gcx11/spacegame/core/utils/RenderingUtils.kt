@@ -1,4 +1,4 @@
-package me.gcx11.spacegame.core
+package me.gcx11.spacegame.core.utils
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer

@@ -1,4 +1,7 @@
-package me.gcx11.spacegame.core
+package me.gcx11.spacegame.core.components
+
+import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.Point
 
 interface CameraComponent : BehaviourComponent {
     var x: Float

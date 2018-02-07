@@ -1,6 +1,6 @@
 package me.gcx11.spacegame.spaceship
 
-import me.gcx11.spacegame.core.BehaviourComponent
+import me.gcx11.spacegame.core.components.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
 
 class BoosterComponent(

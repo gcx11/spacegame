@@ -2,7 +2,7 @@ package me.gcx11.spacegame.spaceship
 
 import me.gcx11.spacegame.SpaceGame
 import me.gcx11.spacegame.bullet.BulletSpawner
-import me.gcx11.spacegame.core.BehaviourComponent
+import me.gcx11.spacegame.core.components.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
 
 class FireBehaviourComponent(

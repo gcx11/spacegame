@@ -2,10 +2,10 @@ package me.gcx11.spacegame.core.camera
 
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
-import me.gcx11.spacegame.core.CameraComponent
 import me.gcx11.spacegame.core.Entity
-import me.gcx11.spacegame.core.GeometricComponent
 import me.gcx11.spacegame.core.Point
+import me.gcx11.spacegame.core.components.CameraComponent
+import me.gcx11.spacegame.core.components.GeometricComponent
 
 class CameraComponent(
     override val parent: Entity

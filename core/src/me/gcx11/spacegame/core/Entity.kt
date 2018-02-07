@@ -1,5 +1,7 @@
 package me.gcx11.spacegame.core
 
+import me.gcx11.spacegame.core.components.Component
+
 /**
  * Entity - a basic game entity
  *

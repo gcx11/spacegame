@@ -3,7 +3,7 @@ package me.gcx11.spacegame.core.camera
 import com.badlogic.gdx.Gdx
 import me.gcx11.spacegame.core.ComposedFromTwo
 import me.gcx11.spacegame.core.Entity
-import me.gcx11.spacegame.core.GeometricComponent
+import me.gcx11.spacegame.core.components.GeometricComponent
 import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.Reusable
 import me.gcx11.spacegame.core.Triangle
