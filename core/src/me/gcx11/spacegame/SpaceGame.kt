@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.camera.CameraSpawner
 import me.gcx11.spacegame.core.components.BehaviourComponent
 import me.gcx11.spacegame.core.components.CameraComponent
 import me.gcx11.spacegame.core.components.CollidableComponent
@@ -21,10 +22,7 @@ class SpaceGame : ApplicationAdapter() {
         private val entitiesToDelete: MutableList<Entity> = mutableListOf()
 
         val entitiesReadOnly: List<Entity> = entities
-        val camera = Entity.new().apply {
-                addComponent(me.gcx11.spacegame.core.camera.GeometryComponent(this))
-                addComponent(me.gcx11.spacegame.core.camera.CameraComponent(this))
-            }
+        val camera = CameraSpawner.createLibGdxCamera()
 
         fun addLater(entity: Entity) {
             entitiesToAdd.add(entity)
@@ -44,7 +42,6 @@ class SpaceGame : ApplicationAdapter() {
 
         entities.add(player)
         entities.add(SpaceshipSpawner.createEnemy(500f, 500f))
-
         entities.add(MeteorSpawner.createMeteor(300f, 300f))
 
         val random = Random()
