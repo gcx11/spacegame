@@ -11,8 +11,8 @@ import kotlin.math.sin
 class GeometricComponent(
     override val parent: Entity,
 
-    var x: Float,
-    var y: Float,
+    override var x: Float,
+    override var y: Float,
     var directionAngle: Float = 0f,
 
     val size: Float = 5f

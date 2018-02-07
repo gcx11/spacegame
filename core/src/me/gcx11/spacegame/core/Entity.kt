@@ -24,7 +24,8 @@ class Entity(
     }
 
     inline fun <reified T : Component> getRequiredComponent(): T {
-        return components.first { it is T } as T
+        return getOptionalComponent()
+            ?: throw Exception("Component of type ${T::class.java.name} not found")
     }
 
     inline fun <reified T : Component> getOptionalComponent(): T? {

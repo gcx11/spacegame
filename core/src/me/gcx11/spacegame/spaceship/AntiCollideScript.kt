@@ -4,14 +4,11 @@ import me.gcx11.spacegame.SpaceGame
 import me.gcx11.spacegame.core.CollidableComponent
 import me.gcx11.spacegame.core.PI_FLOAT
 import me.gcx11.spacegame.core.Point
-import java.util.*
 import kotlin.math.abs
 
 class AntiCollideScript(
     component: EnemyLogicComponent, priority: Int
 ) : LogicScript(component, priority) {
-
-    private val rnd = Random()
 
     override fun needActivation(): Boolean {
         return isGoingToCollide()

@@ -9,8 +9,8 @@ import me.gcx11.spacegame.core.Shape
 class GeometricComponent(
     override val parent: Entity,
 
-    val x: Float,
-    val y: Float
+    override var x: Float,
+    override var y: Float
 ) : GeometricComponent {
 
     override val shape: Shape by Reusable(Point.default) {
