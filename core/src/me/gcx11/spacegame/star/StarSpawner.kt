@@ -1,15 +1,15 @@
 package me.gcx11.spacegame.star
 
-import me.gcx11.spacegame.core.components.DefaultCollidableComponent
 import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.components.DefaultCollidableComponent
 
 object StarSpawner {
 
     fun createStar(x: Float, y: Float): Entity {
-        return Entity.new().also {
-            it.addComponent(GeometricComponent(it, x, y))
-            it.addComponent(DefaultCollidableComponent(it))
-            it.addComponent(RenderableComponent(it))
+        return Entity.new().apply {
+            addComponent(GeometricComponent(this, x, y))
+            addComponent(DefaultCollidableComponent(this))
+            addComponent(RenderableComponent(this))
         }
     }
 }

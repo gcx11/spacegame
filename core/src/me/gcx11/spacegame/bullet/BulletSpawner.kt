@@ -1,7 +1,7 @@
 package me.gcx11.spacegame.bullet
 
-import me.gcx11.spacegame.core.components.DefaultCollidableComponent
 import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.components.DefaultCollidableComponent
 import me.gcx11.spacegame.spaceship.GeometricComponent
 import me.gcx11.spacegame.spaceship.MoveBehaviourComponent
 import me.gcx11.spacegame.spaceship.RenderableComponent
@@ -15,22 +15,22 @@ object BulletSpawner {
         val shooterMove = shooter.getRequiredComponent<MoveBehaviourComponent>()
         val shooterColor = shooter.getRequiredComponent<RenderableComponent>().color
 
-        return Entity.new().also {
-            it.addComponent(
+        return Entity.new().apply {
+            addComponent(
                 me.gcx11.spacegame.bullet.GeometricComponent(
-                    it, shooterGeo.noseX + 2f * cos(shooterGeo.directionAngle),
+                    this, shooterGeo.noseX + 2f * cos(shooterGeo.directionAngle),
                     shooterGeo.noseY + 2f * sin(shooterGeo.directionAngle),
                     shooterGeo.directionAngle
                 )
             )
-            it.addComponent(
+            addComponent(
                 me.gcx11.spacegame.bullet.MoveBehaviourComponent(
-                    it,
+                    this,
                     speed = shooterMove.speed + 2f
                 )
             )
-            it.addComponent(me.gcx11.spacegame.bullet.RenderableComponent(it, color = shooterColor))
-            it.addComponent(DefaultCollidableComponent(it))
+            addComponent(me.gcx11.spacegame.bullet.RenderableComponent(this, color = shooterColor))
+            addComponent(DefaultCollidableComponent(this))
         }
     }
 }
