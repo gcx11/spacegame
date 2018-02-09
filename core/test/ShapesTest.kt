@@ -1,9 +1,4 @@
-
-import me.gcx11.spacegame.core.ComposedFromTwo
-import me.gcx11.spacegame.core.Line
-import me.gcx11.spacegame.core.Point
-import me.gcx11.spacegame.core.Shape
-import me.gcx11.spacegame.core.Triangle
+import me.gcx11.spacegame.core.*
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -97,6 +92,21 @@ class ShapesTest {
 
         assertTrue(checkIntersectionBothWays(first, second))
         assertFalse(checkIntersectionBothWays(first, third))
+    }
+
+    @Test
+    fun circleWithShapes() {
+        val circle00 = Circle(Point(0F, 0F), 50F)
+        val circle10_10 = Circle(Point(10F, 10F), 1F)
+        val point11 = Point(1F, 1F)
+        val triangle = Triangle(point11, point11.copy(x = 2F), point11.copy(y = 2F))
+
+        assertTrue(circle00.intersectsWith(circle10_10))
+        assertTrue(circle00.intersectsWith(triangle))
+        assertTrue(circle00.intersectsWith(point11))
+        assertFalse(circle10_10.intersectsWith(point11))
+        assertFalse(circle10_10.intersectsWith(triangle))
+
     }
 
     @Test
