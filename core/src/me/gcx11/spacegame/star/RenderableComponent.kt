@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.components.CollidableComponent
 import me.gcx11.spacegame.core.components.RenderableComponent
+import me.gcx11.spacegame.core.components.ShapeRenderableComponent
 import me.gcx11.spacegame.core.components.getOptionalSibling
-import me.gcx11.spacegame.core.utils.use
 
 class RenderableComponent(
     override val parent: Entity,
@@ -14,17 +14,14 @@ class RenderableComponent(
     val color: Color = Color.WHITE,
     val shapeRenderer: ShapeRenderer = ShapeRenderer()
 ) : RenderableComponent {
+    private val internalComponent = ShapeRenderableComponent(parent, color, shapeRenderer)
+
     override fun draw() {
         val visible = getOptionalSibling<CollidableComponent>()
             ?.allCollided()?.isEmpty() ?: true
 
         if (visible) {
-            getOptionalSibling<GeometricComponent>()
-                ?.let {
-                    shapeRenderer.use(color) {
-                        circle(it.x, it.y, 1f)
-                    }
-                }
+            internalComponent.draw()
         }
     }
 }

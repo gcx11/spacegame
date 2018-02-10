@@ -3,6 +3,7 @@ package me.gcx11.spacegame.spaceship
 import com.badlogic.gdx.graphics.Color
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.components.DefaultCollidableComponent
+import me.gcx11.spacegame.core.components.ShapeRenderableComponent
 
 object SpaceshipSpawner {
 
@@ -15,7 +16,7 @@ object SpaceshipSpawner {
 
     fun createPrototype(x: Float, y: Float, color: Color): Entity {
         return createMinimalPrototype(x, y).apply {
-            addComponent(RenderableComponent(this, color = color))
+            addComponent(ShapeRenderableComponent(this, color = color))
             addComponent(FireBehaviourComponent(this))
             addComponent(BoosterComponent(this))
         }

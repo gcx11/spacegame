@@ -9,7 +9,7 @@ import me.gcx11.spacegame.core.camera.CameraComponent
 
 inline fun ShapeRenderer.use(
     color: Color,
-    shapeType: ShapeRenderer.ShapeType = ShapeRenderer.ShapeType.Line,
+    shapeType: ShapeRenderer.ShapeType = ShapeRenderer.ShapeType.Filled,
     projectionMatrix: Matrix4 =
     SpaceGame.camera.getRequiredComponent<CameraComponent>().internalCamera.combined,
     block: ShapeRenderer.() -> Unit
