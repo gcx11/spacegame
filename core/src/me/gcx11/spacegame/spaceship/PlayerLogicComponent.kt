@@ -3,9 +3,10 @@ package me.gcx11.spacegame.spaceship
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import me.gcx11.spacegame.SpaceGame
-import me.gcx11.spacegame.core.components.CameraComponent
 import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.Point
+import me.gcx11.spacegame.core.components.CameraComponent
+import me.gcx11.spacegame.core.components.getRequiredSibling
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.hypot
@@ -22,7 +23,7 @@ class PlayerLogicComponent(
         val point = SpaceGame.camera.getRequiredComponent<CameraComponent>().unproject(
             Point(Gdx.input.x.toFloat(), Gdx.input.y.toFloat())
         )
-        val geo = parent.getRequiredComponent<GeometricComponent>()
+        val geo = getRequiredSibling<GeometricComponent>()
 
         return atan2(point.y - geo.y, point.x - geo.x)
     }
@@ -40,7 +41,7 @@ class PlayerLogicComponent(
             Point(Gdx.input.x.toFloat(), Gdx.input.y.toFloat())
         )
 
-        val geo = parent.getRequiredComponent<GeometricComponent>()
+        val geo = getRequiredSibling<GeometricComponent>()
         val screenMin = min(Gdx.graphics.width / 2f, Gdx.graphics.height / 2f)
 
         return min(screenMin, hypot(abs(geo.x - point.x), abs(geo.y - point.y))) / screenMin

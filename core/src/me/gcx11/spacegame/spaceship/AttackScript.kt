@@ -2,6 +2,7 @@ package me.gcx11.spacegame.spaceship
 
 import me.gcx11.spacegame.SpaceGame
 import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.components.getRequiredSibling
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.hypot
@@ -39,7 +40,7 @@ class AttackScript(
     }
 
     private fun hasPlayerInSight(): Boolean {
-        val selfGeo = component.parent.getRequiredComponent<GeometricComponent>()
+        val selfGeo = component.getRequiredSibling<GeometricComponent>()
         val enemy = target ?: findTarget()
         val targetGeo = enemy?.getRequiredComponent<GeometricComponent>()
 
@@ -51,7 +52,7 @@ class AttackScript(
     }
 
     private fun isBehindEnemy(): Boolean {
-        val selfGeo = component.parent.getRequiredComponent<GeometricComponent>()
+        val selfGeo = component.getRequiredSibling<GeometricComponent>()
         val targetGeo = target?.getRequiredComponent<GeometricComponent>()
 
         if (targetGeo != null) {
@@ -63,7 +64,7 @@ class AttackScript(
     }
 
     private fun computeDirection(): Float {
-        val selfGeo = component.parent.getRequiredComponent<GeometricComponent>()
+        val selfGeo = component.getRequiredSibling<GeometricComponent>()
         val targetGeo = target?.getRequiredComponent<GeometricComponent>()
 
         if (targetGeo != null) {

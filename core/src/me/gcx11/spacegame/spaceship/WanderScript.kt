@@ -1,6 +1,7 @@
 package me.gcx11.spacegame.spaceship
 
 import me.gcx11.spacegame.core.Point
+import me.gcx11.spacegame.core.components.getRequiredSibling
 import me.gcx11.spacegame.core.utils.inRange
 import java.util.*
 import kotlin.math.abs
@@ -20,7 +21,7 @@ class WanderScript(
     }
 
     override fun update(delta: Float) {
-        val shipGeo = component.parent.getRequiredComponent<GeometricComponent>()
+        val shipGeo = component.getRequiredSibling<GeometricComponent>()
         val distance = hypot(
             abs(shipGeo.x - destination!!.x),
             abs(shipGeo.y - destination!!.y)
@@ -42,7 +43,7 @@ class WanderScript(
     }
 
     fun newRandomDestination(): Point {
-        val shipPosition = component.parent.getRequiredComponent<GeometricComponent>()
+        val shipPosition = component.getRequiredSibling<GeometricComponent>()
 
         return Point(
             shipPosition.x + rnd.inRange(-100..100),

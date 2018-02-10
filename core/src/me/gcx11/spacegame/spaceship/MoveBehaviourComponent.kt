@@ -1,7 +1,8 @@
 package me.gcx11.spacegame.spaceship
 
-import me.gcx11.spacegame.core.components.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.components.BehaviourComponent
+import me.gcx11.spacegame.core.components.getOptionalSibling
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -24,19 +25,19 @@ class MoveBehaviourComponent(
     val speed: Float get() = defaultSpeed * (1f + modifiers.map { it.percentage }.sum())
 
     override fun update(delta: Float) {
-        parent.getOptionalComponent<GeometricComponent>()?.let {
-                movementPercentage = parent.getOptionalComponent<LogicComponent>()
-                    ?.computeSpeedPercentage() ?: 1.0f
-                val desiredSpeed = speed * movementPercentage
-                if (currentSpeed < desiredSpeed) {
-                    currentSpeed += acceleration
-                } else if (currentSpeed > desiredSpeed) {
-                    currentSpeed -= acceleration
-                }
-
-                it.x += currentSpeed * cos(it.directionAngle)
-                it.y += currentSpeed * sin(it.directionAngle)
+        getOptionalSibling<GeometricComponent>()?.let {
+            movementPercentage = getOptionalSibling<LogicComponent>()
+                ?.computeSpeedPercentage() ?: 1.0f
+            val desiredSpeed = speed * movementPercentage
+            if (currentSpeed < desiredSpeed) {
+                currentSpeed += acceleration
+            } else if (currentSpeed > desiredSpeed) {
+                currentSpeed -= acceleration
             }
+
+            it.x += currentSpeed * cos(it.directionAngle)
+            it.y += currentSpeed * sin(it.directionAngle)
+        }
 
         modifiers.forEach { it.duration -= delta }
         modifiers.removeAll { it.duration < 0f }

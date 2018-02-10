@@ -1,9 +1,10 @@
 package me.gcx11.spacegame.spaceship
 
 import me.gcx11.spacegame.SpaceGame
-import me.gcx11.spacegame.core.components.CollidableComponent
-import me.gcx11.spacegame.core.utils.PI_FLOAT
 import me.gcx11.spacegame.core.Point
+import me.gcx11.spacegame.core.components.CollidableComponent
+import me.gcx11.spacegame.core.components.getRequiredSibling
+import me.gcx11.spacegame.core.utils.PI_FLOAT
 import kotlin.math.abs
 
 class AntiCollideScript(
@@ -15,7 +16,7 @@ class AntiCollideScript(
     }
 
     override fun update(delta: Float) {
-        val selfGeo = component.parent.getRequiredComponent<GeometricComponent>()
+        val selfGeo = component.getRequiredSibling<GeometricComponent>()
 
         val pointToAvoid = getTooClose()
         component.speedPercentage = 0.3f
@@ -45,7 +46,7 @@ class AntiCollideScript(
     }
 
     private fun getTooClose(): Point? {
-        val selfGeo = component.parent.getRequiredComponent<GeometricComponent>()
+        val selfGeo = component.getRequiredSibling<GeometricComponent>()
 
         return SpaceGame.entitiesReadOnly
             .filter {

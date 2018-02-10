@@ -6,6 +6,7 @@ import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.components.CameraComponent
 import me.gcx11.spacegame.core.components.GeometricComponent
+import me.gcx11.spacegame.core.components.getRequiredSibling
 
 class CameraComponent(
     override val parent: Entity
@@ -34,7 +35,7 @@ class CameraComponent(
     }
 
     override fun isVisible(entity: Entity): Boolean {
-        val shape = parent.getRequiredComponent<GeometricComponent>().shape
+        val shape = getRequiredSibling<GeometricComponent>().shape
 
         return entity.getOptionalComponent<GeometricComponent>()
             ?.shape?.intersectsWith(shape) ?: false

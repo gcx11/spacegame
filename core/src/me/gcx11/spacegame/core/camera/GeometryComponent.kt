@@ -3,19 +3,20 @@ package me.gcx11.spacegame.core.camera
 import com.badlogic.gdx.Gdx
 import me.gcx11.spacegame.core.ComposedFromTwo
 import me.gcx11.spacegame.core.Entity
-import me.gcx11.spacegame.core.components.GeometricComponent
 import me.gcx11.spacegame.core.Point
 import me.gcx11.spacegame.core.Reusable
 import me.gcx11.spacegame.core.Triangle
+import me.gcx11.spacegame.core.components.GeometricComponent
+import me.gcx11.spacegame.core.components.getRequiredSibling
 
 class GeometryComponent(
     override val parent: Entity
 ) : GeometricComponent {
     
     override var x: Float = 0f
-        get() = parent.getRequiredComponent<CameraComponent>().x
+        get() = getRequiredSibling<CameraComponent>().x
     override var y: Float = 0f
-        get() = parent.getRequiredComponent<CameraComponent>().y
+        get() = getRequiredSibling<CameraComponent>().y
 
     val leftUpper by Reusable(Point.default) {
         x = this@GeometryComponent.x - Gdx.graphics.width / 2f

@@ -4,8 +4,8 @@ interface CollidableComponent : DisposableComponent {
     val collidedCollection: MutableCollection<CollidableComponent>
 
     fun collidesWith(collidable: CollidableComponent): Boolean {
-        val selfGeo = parent.getRequiredComponent<GeometricComponent>()
-        val otherGeo = collidable.parent.getOptionalComponent<GeometricComponent>()
+        val selfGeo = getRequiredSibling<GeometricComponent>()
+        val otherGeo = collidable.getOptionalSibling<GeometricComponent>()
         return otherGeo?.shape?.intersectsWith(selfGeo.shape) ?: false
     }
 

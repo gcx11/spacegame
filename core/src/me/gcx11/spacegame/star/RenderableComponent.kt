@@ -2,9 +2,10 @@ package me.gcx11.spacegame.star
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import me.gcx11.spacegame.core.components.CollidableComponent
 import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.components.CollidableComponent
 import me.gcx11.spacegame.core.components.RenderableComponent
+import me.gcx11.spacegame.core.components.getOptionalSibling
 import me.gcx11.spacegame.core.utils.use
 
 class RenderableComponent(
@@ -14,11 +15,11 @@ class RenderableComponent(
     val shapeRenderer: ShapeRenderer = ShapeRenderer()
 ) : RenderableComponent {
     override fun draw() {
-        val visible = parent.getOptionalComponent<CollidableComponent>()
+        val visible = getOptionalSibling<CollidableComponent>()
             ?.allCollided()?.isEmpty() ?: true
 
         if (visible) {
-            parent.getOptionalComponent<GeometricComponent>()
+            getOptionalSibling<GeometricComponent>()
                 ?.let {
                     shapeRenderer.use(color) {
                         circle(it.x, it.y, 1f)

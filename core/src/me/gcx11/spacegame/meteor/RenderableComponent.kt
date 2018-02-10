@@ -3,8 +3,9 @@ package me.gcx11.spacegame.meteor
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import me.gcx11.spacegame.core.Entity
-import me.gcx11.spacegame.core.components.RenderableComponent
 import me.gcx11.spacegame.core.Triangle
+import me.gcx11.spacegame.core.components.RenderableComponent
+import me.gcx11.spacegame.core.components.getOptionalSibling
 import me.gcx11.spacegame.core.utils.use
 
 class RenderableComponent(
@@ -14,7 +15,7 @@ class RenderableComponent(
     val shapeRenderer: ShapeRenderer = ShapeRenderer()
 ) : RenderableComponent {
     override fun draw() {
-        parent.getOptionalComponent<GeometricComponent>()
+        getOptionalSibling<GeometricComponent>()
             ?.let {
                 shapeRenderer.use(color, shapeType = ShapeRenderer.ShapeType.Filled) {
                     it.shape.subShapes.filterIsInstance<Triangle>().forEach {
@@ -24,10 +25,6 @@ class RenderableComponent(
                                 it.third.x, it.third.y
                             )
                         }
-
-                    /*for (i in 0 until it.points.size) {
-                        line(it.points[i].vector, it.points[(i + 1) % it.points.size].vector)
-                    }*/
                 }
             }
     }

@@ -1,7 +1,8 @@
 package me.gcx11.spacegame.spaceship
 
-import me.gcx11.spacegame.core.components.BehaviourComponent
 import me.gcx11.spacegame.core.Entity
+import me.gcx11.spacegame.core.components.BehaviourComponent
+import me.gcx11.spacegame.core.components.getRequiredSibling
 
 class BoosterComponent(
     override val parent: Entity,
@@ -12,8 +13,8 @@ class BoosterComponent(
     var speedGainTimer = 0f
 
     override fun update(delta: Float) {
-        val logicComponent = parent.getRequiredComponent<LogicComponent>()
-        val moveBehaviourComponent = parent.getRequiredComponent<MoveBehaviourComponent>()
+        val logicComponent = getRequiredSibling<LogicComponent>()
+        val moveBehaviourComponent = getRequiredSibling<MoveBehaviourComponent>()
         if (logicComponent.canSpeedUp() && speedGainTimer <= 0f) {
             moveBehaviourComponent.addModifier(speedGain, duration)
             speedGainTimer = delay
