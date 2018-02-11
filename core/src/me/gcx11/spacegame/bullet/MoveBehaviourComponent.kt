@@ -16,7 +16,7 @@ class MoveBehaviourComponent(
 
     override fun update(delta: Float) {
         timer -= delta
-        if (timer < 0) SpaceGame.deleteLater(parent)
+        if (timer < 0) SpaceGame.scene.deleteLater(parent)
 
         getOptionalSibling<GeometricComponent>()?.let {
             it.x += speed * cos(it.directionAngle)
