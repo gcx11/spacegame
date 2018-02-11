@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import me.gcx11.spacegame.SpaceGame
 import me.gcx11.spacegame.core.components.CameraComponent
 import me.gcx11.spacegame.core.components.DisposableComponent
+import me.gcx11.spacegame.core.debug.DebugSpawner
 import me.gcx11.spacegame.meteor.MeteorSpawner
 import me.gcx11.spacegame.spaceship.SpaceshipSpawner
 import me.gcx11.spacegame.star.StarSpawner
@@ -43,6 +44,8 @@ class GameScene : Scene {
                 StarSpawner.createStar(1000 * random.nextFloat(), 1000 * random.nextFloat())
             )
         }
+
+        world.add(DebugSpawner.createDebug())
 
         SpaceGame.camera.getRequiredComponent<CameraComponent>().follow(player)
     }

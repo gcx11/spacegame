@@ -14,6 +14,7 @@ class RenderableComponent(
     val color: Color = Color.WHITE,
     val shapeRenderer: ShapeRenderer = ShapeRenderer()
 ) : RenderableComponent {
+
     private val internalComponent = ShapeRenderableComponent(parent, color, shapeRenderer)
 
     override fun draw() {
