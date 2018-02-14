@@ -2,8 +2,10 @@ package me.gcx11.spacegame.core
 
 import com.badlogic.gdx.Gdx
 import me.gcx11.spacegame.SpaceGame
+import me.gcx11.spacegame.core.components.BehaviourComponent
 import me.gcx11.spacegame.core.components.CameraComponent
 import me.gcx11.spacegame.core.components.DisposableComponent
+import me.gcx11.spacegame.core.components.RenderableComponent
 import me.gcx11.spacegame.core.debug.DebugSpawner
 import me.gcx11.spacegame.meteor.MeteorSpawner
 import me.gcx11.spacegame.spaceship.SpaceshipSpawner
@@ -12,18 +14,22 @@ import java.util.*
 
 class GameScene : Scene {
 
+    private val staticEntities: MutableList<Entity> = mutableListOf()
+
     private val entitiesToAdd: MutableList<Entity> = mutableListOf()
     private val entitiesToDelete: MutableList<Entity> = mutableListOf()
 
     private val world = World()
 
-    val entitiesReadOnly: List<Entity> = world.allEntities()
+    val entitiesReadOnly: List<Entity> get() = world.allEntities()
 
     fun addLater(entity: Entity) {
+        if (entity.isDestroyed) return
         entitiesToAdd.add(entity)
     }
 
     fun deleteLater(entity: Entity) {
+        entity.isDestroyed = true
         entitiesToDelete.add(entity)
     }
 
@@ -45,22 +51,26 @@ class GameScene : Scene {
             )
         }
 
-        world.add(DebugSpawner.createDebug())
+        staticEntities.add(DebugSpawner.createDebug())
 
         SpaceGame.camera.getRequiredComponent<CameraComponent>().follow(player)
     }
 
     override fun update(delta: Float) {
-        world.update(delta)
-
         entitiesToDelete.forEach { world.remove(it) }
         entitiesToDelete.flatMap { it.getAllComponents<DisposableComponent>() }.forEach { it.dispose() }
         entitiesToDelete.clear()
         entitiesToAdd.forEach { world.add(it) }
         entitiesToAdd.clear()
+
+        world.update(delta)
+
+        staticEntities.forEach { it.getOptionalComponent<BehaviourComponent>()?.update(delta) }
     }
 
     override fun draw() {
         world.draw()
+
+        staticEntities.forEach { it.getOptionalComponent<RenderableComponent>()?.draw() }
     }
 }

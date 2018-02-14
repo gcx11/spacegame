@@ -14,7 +14,8 @@ import me.gcx11.spacegame.core.components.Component
  */
 class Entity(
     val id: Int,
-    val components: MutableList<Component> = mutableListOf()
+    val components: MutableList<Component> = mutableListOf(),
+    var isDestroyed: Boolean = false
 ) {
 
     fun addComponent(component: Component) {

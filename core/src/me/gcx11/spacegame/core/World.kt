@@ -6,12 +6,19 @@ import me.gcx11.spacegame.SpaceGame
 import me.gcx11.spacegame.core.components.BehaviourComponent
 import me.gcx11.spacegame.core.components.CameraComponent
 import me.gcx11.spacegame.core.components.CollidableComponent
+import me.gcx11.spacegame.core.components.GeometricComponent
 import me.gcx11.spacegame.core.components.RenderableComponent
 
 class World {
-    private val entities: MutableList<Entity> = mutableListOf()
+
+    val chunks: MutableMap<Pair<Int, Int>, Chunk> = mutableMapOf()
+
+    private val entitiesToAdd: MutableList<Entity> = mutableListOf()
+    private val entitiesToRemove: MutableList<Entity> = mutableListOf()
 
     fun update(delta: Float) {
+        val entities = allEntities()
+
         for (ent in entities) {
             ent.getAllComponents<BehaviourComponent>().forEach { it.update(delta) }
         }
@@ -30,9 +37,17 @@ class World {
                 }
             }
         }
+
+        entitiesToRemove.forEach { remove(it) }
+        entitiesToRemove.clear()
+
+        entitiesToAdd.forEach { add(it) }
+        entitiesToAdd.clear()
     }
 
     fun draw() {
+        val entities = allEntities()
+
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
@@ -46,12 +61,22 @@ class World {
     }
 
     fun add(entity: Entity) {
-        entities.add(entity)
+        if (entity.isDestroyed) return
+
+        val x = (entity.getRequiredComponent<GeometricComponent>().x / Chunk.width).toInt()
+        val y = (entity.getRequiredComponent<GeometricComponent>().y / Chunk.height).toInt()
+
+        val chunk = chunks.getOrPut(Pair(x, y), { Chunk(this, x, y) })
+        chunk.add(entity)
     }
 
     fun remove(entity: Entity) {
-        entities.remove(entity)
+        val x = (entity.getRequiredComponent<GeometricComponent>().x / Chunk.width).toInt()
+        val y = (entity.getRequiredComponent<GeometricComponent>().y / Chunk.height).toInt()
+
+        val chunk = chunks[(Pair(x, y))]!!
+        chunk.remove(entity)
     }
 
-    fun allEntities(): List<Entity> = entities
+    fun allEntities(): List<Entity> = chunks.values.filter { it.isActive }.flatMap { it.getAllEntities() }
 }

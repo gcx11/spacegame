@@ -12,7 +12,7 @@ object MeteorSpawner {
             addComponent(GeometricComponent(this, x, y, radius = 40f))
             addComponent(DefaultCollidableComponent(this))
             addComponent(ShapeRenderableComponent(this, Color.BROWN))
-            addComponent(MoveBehaviourComponent(this))
+            addComponent(MoveComponent(this, speed = 0.5f))
         }
     }
 }
