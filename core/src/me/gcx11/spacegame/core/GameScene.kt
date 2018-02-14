@@ -7,6 +7,7 @@ import me.gcx11.spacegame.core.components.CameraComponent
 import me.gcx11.spacegame.core.components.DisposableComponent
 import me.gcx11.spacegame.core.components.RenderableComponent
 import me.gcx11.spacegame.core.debug.DebugSpawner
+import me.gcx11.spacegame.core.utils.PI_FLOAT
 import me.gcx11.spacegame.meteor.MeteorSpawner
 import me.gcx11.spacegame.spaceship.SpaceshipSpawner
 import me.gcx11.spacegame.star.StarSpawner
@@ -42,12 +43,21 @@ class GameScene : Scene {
 
         world.add(player)
         world.add(SpaceshipSpawner.createEnemy(500f, 500f))
-        world.add(MeteorSpawner.createMeteor(300f, 300f))
 
         val random = Random()
-        for (i in 0 until 100) {
+        for (i in 0 until 10) {
             world.add(
-                StarSpawner.createStar(1000 * random.nextFloat(), 1000 * random.nextFloat())
+                MeteorSpawner.createMeteor(
+                    5000 * random.nextFloat(),
+                    5000 * random.nextFloat(),
+                    2 * PI_FLOAT * random.nextFloat()
+                )
+            )
+        }
+
+        for (i in 0 until 200) {
+            world.add(
+                StarSpawner.createStar(5000 * random.nextFloat(), 5000 * random.nextFloat())
             )
         }
 

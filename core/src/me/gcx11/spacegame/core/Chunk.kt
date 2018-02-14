@@ -32,8 +32,8 @@ class Chunk(
         }
 
     companion object {
-        val width: Int = 100
-        val height: Int = 100
+        val width: Int = 200
+        val height: Int = 200
     }
 
     fun add(entity: Entity) {
@@ -46,7 +46,9 @@ class Chunk(
     }
 
     fun remove(entity: Entity) {
-        entities.remove(entity)
+        if (!entities.remove(entity)) {
+            throw Exception("Entity ${entity.id} not found in [$x, $y]")
+        }
     }
 
     fun getAllEntities(): List<Entity> {

@@ -14,12 +14,12 @@ class MoveComponent(
 
     override fun update(delta: Float) {
         timer -= delta
+        super.update(delta)
+
         if (timer < 0) {
             SpaceGame.scene.deleteLater(parent)
             eventHandler.removeAll()
         }
-
-        super.update(delta)
     }
 
     override fun direction(): Float {

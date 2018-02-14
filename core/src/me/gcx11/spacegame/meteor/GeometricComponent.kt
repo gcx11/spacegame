@@ -16,7 +16,7 @@ class GeometricComponent(
     override var x: Float,
     override var y: Float,
     val radius: Float,
-    val directionAngle: Float = 0.3f
+    val directionAngle: Float
 ) : GeometricComponent {
 
     val parts = 5

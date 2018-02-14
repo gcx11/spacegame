@@ -17,6 +17,12 @@ class World {
     private val entitiesToRemove: MutableList<Entity> = mutableListOf()
 
     fun update(delta: Float) {
+        entitiesToRemove.forEach { remove(it) }
+        entitiesToRemove.clear()
+
+        entitiesToAdd.forEach { add(it) }
+        entitiesToAdd.clear()
+
         val entities = allEntities()
 
         for (ent in entities) {
@@ -37,12 +43,6 @@ class World {
                 }
             }
         }
-
-        entitiesToRemove.forEach { remove(it) }
-        entitiesToRemove.clear()
-
-        entitiesToAdd.forEach { add(it) }
-        entitiesToAdd.clear()
     }
 
     fun draw() {
@@ -74,7 +74,8 @@ class World {
         val x = (entity.getRequiredComponent<GeometricComponent>().x / Chunk.width).toInt()
         val y = (entity.getRequiredComponent<GeometricComponent>().y / Chunk.height).toInt()
 
-        val chunk = chunks[(Pair(x, y))]!!
+        val chunk = chunks[(Pair(x, y))]
+            ?: throw Exception("Chunk [$x, $y] doesn't exists, when removing entity ${entity.id}")
         chunk.remove(entity)
     }
 
