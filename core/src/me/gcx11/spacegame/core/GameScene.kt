@@ -25,12 +25,10 @@ class GameScene : Scene {
     val entitiesReadOnly: List<Entity> get() = world.allEntities()
 
     fun addLater(entity: Entity) {
-        if (entity.isDestroyed) return
         entitiesToAdd.add(entity)
     }
 
     fun deleteLater(entity: Entity) {
-        entity.isDestroyed = true
         entitiesToDelete.add(entity)
     }
 
@@ -50,7 +48,8 @@ class GameScene : Scene {
                 MeteorSpawner.createMeteor(
                     5000 * random.nextFloat(),
                     5000 * random.nextFloat(),
-                    2 * PI_FLOAT * random.nextFloat()
+                    2 * PI_FLOAT * random.nextFloat(),
+                    PI_FLOAT * random.nextFloat()
                 )
             )
         }

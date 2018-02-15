@@ -37,8 +37,6 @@ class Chunk(
     }
 
     fun add(entity: Entity) {
-        if (entity.isDestroyed) return
-
         entity.getOptionalComponent<MoveComponent>()?.let {
                 it.eventHandler += this::onEntityMove
             }

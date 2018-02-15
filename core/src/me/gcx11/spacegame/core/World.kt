@@ -61,8 +61,6 @@ class World {
     }
 
     fun add(entity: Entity) {
-        if (entity.isDestroyed) return
-
         val x = (entity.getRequiredComponent<GeometricComponent>().x / Chunk.width).toInt()
         val y = (entity.getRequiredComponent<GeometricComponent>().y / Chunk.height).toInt()
 
