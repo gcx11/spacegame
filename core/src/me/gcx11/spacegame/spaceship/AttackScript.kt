@@ -36,7 +36,7 @@ class AttackScript(
     }
 
     private fun findTarget(): Entity? {
-        return SpaceGame.entitiesReadOnly.firstOrNull { it.hasComponent<PlayerLogicComponent>() }
+        return SpaceGame.scene.entitiesReadOnly.firstOrNull { it.hasComponent<PlayerLogicComponent>() }
     }
 
     private fun hasPlayerInSight(): Boolean {

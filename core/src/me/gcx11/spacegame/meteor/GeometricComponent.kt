@@ -16,7 +16,8 @@ class GeometricComponent(
     override var x: Float,
     override var y: Float,
     val radius: Float,
-    val directionAngle: Float = 0.3f
+    val directionAngle: Float,
+    val rotationAngle: Float
 ) : GeometricComponent {
 
     val parts = 5
@@ -29,8 +30,8 @@ class GeometricComponent(
     val points by Reusable(Array(parts, { Point.default })) {
         for (i in 0 until parts) {
             val point = this[i]
-            point.x = x + radius * cos(i * 2 * PI_FLOAT / parts)
-            point.y = y + radius * sin(i * 2 * PI_FLOAT / parts)
+            point.x = x + radius * cos(i * 2 * PI_FLOAT / parts + rotationAngle)
+            point.y = y + radius * sin(i * 2 * PI_FLOAT / parts + rotationAngle)
         }
     }
 

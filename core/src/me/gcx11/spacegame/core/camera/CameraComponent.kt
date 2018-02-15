@@ -38,7 +38,7 @@ class CameraComponent(
         val shape = getRequiredSibling<GeometricComponent>().shape
 
         return entity.getOptionalComponent<GeometricComponent>()
-            ?.shape?.intersectsWith(shape) ?: false
+            ?.shape?.intersectsWith(shape) ?: true
     }
 
     override fun unproject(point: Point): Point {

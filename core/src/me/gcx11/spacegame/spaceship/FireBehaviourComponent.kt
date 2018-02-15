@@ -23,6 +23,6 @@ class FireBehaviourComponent(
     }
 
     fun launchMissle() {
-        SpaceGame.addLater(BulletSpawner.createBullet(parent))
+        SpaceGame.scene.addLater(BulletSpawner.createBullet(parent))
     }
 }

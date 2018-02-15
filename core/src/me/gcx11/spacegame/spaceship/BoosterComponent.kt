@@ -14,7 +14,7 @@ class BoosterComponent(
 
     override fun update(delta: Float) {
         val logicComponent = getRequiredSibling<LogicComponent>()
-        val moveBehaviourComponent = getRequiredSibling<MoveBehaviourComponent>()
+        val moveBehaviourComponent = getRequiredSibling<MoveComponent>()
         if (logicComponent.canSpeedUp() && speedGainTimer <= 0f) {
             moveBehaviourComponent.addModifier(speedGain, duration)
             speedGainTimer = delay

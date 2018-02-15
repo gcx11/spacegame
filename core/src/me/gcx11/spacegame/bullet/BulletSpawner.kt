@@ -4,7 +4,7 @@ import me.gcx11.spacegame.core.Entity
 import me.gcx11.spacegame.core.components.DefaultCollidableComponent
 import me.gcx11.spacegame.core.components.ShapeRenderableComponent
 import me.gcx11.spacegame.spaceship.GeometricComponent
-import me.gcx11.spacegame.spaceship.MoveBehaviourComponent
+import me.gcx11.spacegame.spaceship.MoveComponent
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -12,7 +12,7 @@ object BulletSpawner {
 
     fun createBullet(shooter: Entity): Entity {
         val shooterGeo = shooter.getRequiredComponent<GeometricComponent>()
-        val shooterMove = shooter.getRequiredComponent<MoveBehaviourComponent>()
+        val shooterMove = shooter.getRequiredComponent<MoveComponent>()
         val shooterColor = shooter.getRequiredComponent<ShapeRenderableComponent>().color
 
         return Entity.new().apply {
@@ -24,7 +24,7 @@ object BulletSpawner {
                 )
             )
             addComponent(
-                me.gcx11.spacegame.bullet.MoveBehaviourComponent(
+                me.gcx11.spacegame.bullet.MoveComponent(
                     this,
                     speed = shooterMove.speed + 2f
                 )

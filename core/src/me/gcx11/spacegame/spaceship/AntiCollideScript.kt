@@ -48,7 +48,7 @@ class AntiCollideScript(
     private fun getTooClose(): Point? {
         val selfGeo = component.getRequiredSibling<GeometricComponent>()
 
-        return SpaceGame.entitiesReadOnly
+        return SpaceGame.scene.entitiesReadOnly
             .filter {
                 it != component.parent && it.hasComponent<CollidableComponent>()
             }
