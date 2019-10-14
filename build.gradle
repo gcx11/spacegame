@@ -1,32 +1,30 @@
 buildscript {
     ext {
-        kotlinVersion = '1.2.20-eap-33'
-        junitGradlePluginVersion = '1.0.2'
-        junitJupiterVersion = '5.0.3'
+        kotlinVersion = '1.3.41'
+        junitJupiterVersion = '5.5.2'
     }
 
     repositories {
         mavenLocal()
         mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://dl.bintray.com/kotlin/kotlin-eap/" }
         jcenter()
+        google()
     }
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "org.junit.platform:junit-platform-gradle-plugin:$junitGradlePluginVersion"
     }
 }
 
 allprojects {
-    apply plugin: "eclipse"
-    apply plugin: "idea"
 
     version = '1.0'
     ext {
         appName = "spacegame"
-        gdxVersion = '1.9.8'
-        roboVMVersion = '2.3.1'
+        gdxVersion = '1.9.10'
+        roboVMVersion = '2.3.7'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
@@ -35,9 +33,10 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        jcenter()
+        google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "https://dl.bintray.com/kotlin/kotlin-eap/" }
     }
 }
 
@@ -45,25 +44,19 @@ project(":desktop") {
     apply plugin: "kotlin"
 
     dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        implementation project(":core")
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     }
 }
 
 project(":core") {
     apply plugin: "kotlin"
-    apply plugin: 'org.junit.platform.gradle.plugin'
 
     dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-        testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
-        testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        testImplementation "org.junit.jupiter:junit-jupiter:$junitJupiterVersion"
     }
-}
-
-tasks.eclipse.doLast {
-    delete ".project"
 }
